@@ -21,7 +21,6 @@ program
 
 // if we get here, the required param(s) weren't supplied;
 // display help info and bail out
-
 console.log();
 console.error('*** ERROR: package directory not specified\n');
 program.help();
