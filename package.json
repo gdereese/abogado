@@ -1,0 +1,25 @@
+{
+  "name": "abogado",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Gary DeReese Jr",
+  "license": "ISC",
+  "main": "dist/index.js",
+  "bin": {
+    "abogado": "dist/index.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/lodash": "^4.14.88",
+    "@types/node": "^8.0.57",
+    "tslint": "^5.8.0",
+    "typescript": "^2.6.2"
+  },
+  "dependencies": {
+    "commander": "^2.12.2",
+    "lodash": "^4.17.4"
+  }
+}
