@@ -28,20 +28,18 @@ process.stdout.write('\n');
 program.exit(2);
 
 function main(packageDir: string) {
-  const settings = new Settings();
-
   process.stdout.write('\n');
 
   writeVerbose('Collecting dependencies...');
-  const packageLockPath = path.join(settings.packageDir, 'package-lock.json');
-  const dependenciesDir = path.join(settings.packageDir, 'node_modules');
+  const packageLockPath = path.join(packageDir, 'package-lock.json');
+  const dependenciesDir = path.join(packageDir, 'node_modules');
   const pkg = packageBuilder.build(packageLockPath, dependenciesDir);
   writeVerbose('done.\n');
 
   let violations: Violation[];
-  if (settings.policy) {
+  if (program.allow || program.deny) {
     writeVerbose('Evaluating dependencies for policy violations...');
-    violations = paralegal.evaluate(pkg, settings.policy);
+    violations = paralegal.evaluate(pkg, program.allow, program.deny);
     writeVerbose('done.\n');
 
     if (violations) {
@@ -53,17 +51,17 @@ function main(packageDir: string) {
     }
   }
 
-  if (settings.reportPath) {
+  if (program.outputPath) {
     writeVerbose('Generating report...');
-    const report = reportBuilder.build(pkg, settings.policy, violations);
+    const report = reportBuilder.build(pkg, program, violations);
     writeVerbose('done.\n');
 
-    fs.writeFileSync(settings.reportPath, report);
-    writeVerbose('Report written to ' + path.resolve(settings.reportPath) + '.\n');
+    fs.writeFileSync(program.outputPath, report);
+    writeVerbose('Report written to ' + path.resolve(program.outputPath) + '.\n');
   }
 
   process.stdout.write('\n');
-  if (settings.policy && violations) {
+  if ((program.allow || program.deny) && violations) {
     process.exit(1);
   } else {
     process.exit(0);

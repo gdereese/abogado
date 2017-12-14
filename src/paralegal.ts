@@ -5,19 +5,15 @@ import { Package } from './package.class';
 import { Policy } from './policy.class';
 import { Violation } from './violation.class';
 
-export function evaluate(pkg: Package, policy: Policy): Violation[] {
-  if (!policy) {
+export function evaluate(pkg: Package, allow: string[], deny: string[]): Violation[] {
+  if (!allow && !deny) {
     return undefined;
   }
 
-  if (policy.type.toUpperCase() === 'PERMIT') {
-    return evaluatePermitPolicy(pkg, policy.licenses);
-  } else if (policy.type.toUpperCase() === 'PROHIBIT') {
-    return evaluateProhibitPolicy(pkg, policy.licenses);
-  } else if (!policy.type) {
-    throw new Error('Unspecified policy type');
-  } else {
-    throw new Error('Invalid policy type \'' + policy.type + '\'');
+  if (allow) {
+    return evaluatePermitPolicy(pkg, allow);
+  } else if (deny) {
+    return evaluateProhibitPolicy(pkg, deny);
   }
 }
 

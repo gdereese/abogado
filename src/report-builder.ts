@@ -4,11 +4,14 @@ import { Package } from './package.class';
 import { Report } from './report.class';
 import { Violation } from './violation.class';
 
-export function build(pkg: Package, policy: any, violations: Violation[]): Report {
+export function build(pkg: Package, program: any, violations: Violation[]): Report {
   return {
     dependenciesByLicense: _.groupBy(pkg.dependencies, 'license'),
     generated: new Date(),
-    policy: policy,
+    policy: {
+      allow: program.allow,
+      deny: program.deny
+    },
     violations: violations
   };
 }
