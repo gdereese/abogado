@@ -9,8 +9,6 @@ import * as reportBuilder from './report-builder';
 import { Settings } from './settings.class';
 import { Violation } from './violation.class';
 
-// TODO: support allow/deny of specific packages
-
 program
   .arguments('<package-dir>')
   .usage('<package-dir> [options]')

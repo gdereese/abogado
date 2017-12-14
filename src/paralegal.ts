@@ -5,9 +5,6 @@ import { Package } from './package.class';
 import { Policy } from './policy.class';
 import { Violation } from './violation.class';
 
-// TODO: perhaps reference https://github.com/sindresorhus/spdx-license-list and look for special token strings for groups of licenses:
-// (spdx = all registered, osi = osi approved)
-
 export function evaluate(pkg: Package, policy: Policy): Violation[] {
   if (!policy) {
     return undefined;
