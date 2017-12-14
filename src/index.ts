@@ -21,14 +21,14 @@ program
 
 // if we get here, the required param(s) weren't supplied;
 // display help info and bail out
-process.stdout.write('\n');
-process.stderr.write('*** ERROR: package directory not specified\n');
+
+console.log();
+console.error('*** ERROR: package directory not specified\n');
 program.help();
-process.stdout.write('\n');
 program.exit(2);
 
 function main(packageDir: string) {
-  process.stdout.write('\n');
+  console.log();
 
   writeVerbose('Collecting dependencies...');
   const packageLockPath = path.join(packageDir, 'package-lock.json');
@@ -44,10 +44,10 @@ function main(packageDir: string) {
 
     if (violations) {
       _.forEach(violations, (violation: Violation) => {
-        process.stderr.write('*** VIOLATION (' + violation.dependencyName + '): ' + violation.reason + '\n');
+        console.error('*** VIOLATION (' + violation.dependencyName + '): ' + violation.reason);
       });
     } else {
-      process.stdout.write('No policy violations found.\n');
+      console.log('No policy violations found.');
     }
   }
 
@@ -60,7 +60,7 @@ function main(packageDir: string) {
     writeVerbose('Report written to ' + path.resolve(program.outputPath) + '.\n');
   }
 
-  process.stdout.write('\n');
+  console.log();
   if ((program.allow || program.deny) && violations) {
     process.exit(1);
   } else {
@@ -70,6 +70,6 @@ function main(packageDir: string) {
 
 function writeVerbose(text: string) {
   if (program.verbose) {
-    process.stdout.write(text);
+    console.log(text);
   }
 }
