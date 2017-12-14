@@ -5,9 +5,7 @@
   "author": "Gary DeReese Jr",
   "license": "ISC",
   "main": "dist/index.js",
-  "bin": {
-    "abogado": "dist/index.js"
-  },
+  "bin": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
