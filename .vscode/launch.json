@@ -8,9 +8,13 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
+      "preLaunchTask": "build",      
       "program": "${workspaceFolder}/dist/index.js",
       "args": [
-        "-v"
+        ".",
+        "--allow",
+        "MIT,ISC,Apache-*,BSD-3-Clause",
+        "--verbose"
       ]
     }
   ]

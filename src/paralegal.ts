@@ -6,6 +6,7 @@ import { Policy } from './policy.class';
 import { Violation } from './violation.class';
 
 export function evaluate(pkg: Package, allow: string[], deny: string[]): Violation[] {
+  // skip evaluation if no policy is specified
   if (!allow && !deny) {
     return undefined;
   }

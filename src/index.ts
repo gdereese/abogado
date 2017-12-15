@@ -7,13 +7,14 @@ import * as packageBuilder from './package-builder';
 import * as paralegal from './paralegal';
 import * as reportBuilder from './report-builder';
 import { Settings } from './settings.class';
+import * as validator from './validator';
 import { Violation } from './violation.class';
 
 program
   .arguments('<package-dir>')
   .usage('<package-dir> [options]')
-  .option('-a, --allow <licenses>', 'List of licenses to allow', ['*'])
-  .option('-d, --deny <licenses>', 'List of licenses to deny', [])
+  .option('-a, --allow <licenses>', 'List of licenses to allow', split)
+  .option('-d, --deny <licenses>', 'List of licenses to deny', split)
   .option('-o, --output-path <path>', 'Path to report output file')
   .option('-v, --verbose', 'Enable verbose logging')
   .action(main)
@@ -24,9 +25,14 @@ program
 console.log();
 console.error('*** ERROR: package directory not specified\n');
 program.help();
-program.exit(2);
+process.exit(2);
 
 function main(packageDir: string) {
+  const isValid = validator.validate(program);
+  if (!isValid) {
+    process.exit(2);
+  }
+
   console.log();
 
   writeVerbose('Collecting dependencies...');
@@ -41,7 +47,7 @@ function main(packageDir: string) {
     violations = paralegal.evaluate(pkg, program.allow, program.deny);
     writeVerbose('done.\n');
 
-    if (violations) {
+    if ((violations || []).length > 0) {
       _.forEach(violations, (violation: Violation) => {
         console.error('*** VIOLATION (' + violation.dependencyName + '): ' + violation.reason);
       });
@@ -60,11 +66,16 @@ function main(packageDir: string) {
   }
 
   console.log();
-  if ((program.allow || program.deny) && violations) {
+
+  if ((violations || []).length > 0) {
     process.exit(1);
   } else {
     process.exit(0);
   }
+}
+
+function split(val: string): string[] {
+  return val.split(',');
 }
 
 function writeVerbose(text: string) {
