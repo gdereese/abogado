@@ -1,9 +1,16 @@
 {
   "name": "abogado",
   "version": "1.0.0",
-  "description": "",
+  "description": "Checks a package's dependencies for compliance with a specified licensing policy.",
   "author": "Gary DeReese Jr",
-  "license": "ISC",
+  "license": "MIT",
+  "repository": { 
+    "type" : "git", 
+    "url" : "https://github.com/gdereese/abogado.git"
+  },
+  "bugs": {
+    "url" : "https://github.com/gdereese/abogado/issues"
+  },
   "main": "dist/index.js",
   "bin": "dist/index.js",
   "scripts": {
