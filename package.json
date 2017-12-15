@@ -17,6 +17,7 @@
     "typescript": "^2.6.2"
   },
   "dependencies": {
+    "chalk": "^2.3.0",
     "commander": "^2.12.2",
     "lodash": "^4.17.4"
   }
