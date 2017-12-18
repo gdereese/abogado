@@ -17,3 +17,17 @@ Usage: abogado <package-dir> [options]
     -v, --verbose             Enable verbose logging
     -h, --help                output usage information
 ```
+
+Refer to licenses using their SPDX identifiers.  The list of licenses available are here:
+https://spdx.org/licenses
+
+## Examples
+#### Allow only MIT and any version of the Apache license in the current package
+```
+abogado . -allow MIT,Apache-*
+```
+
+#### Allow any license but the Affero GPL
+```
+abogado . -deny AGPL-1.0
+```
