@@ -6,6 +6,17 @@ Abogado inspects the license type of each Node package dependency referenced by 
 
 For example, this would work very well incorporated into an automated build process so that the build can be failed if a dependency is introduced for which your organization cannot comply with the license terms.
 
+## Installation
+#### Install locally
+```
+npm install abogado
+```
+
+#### Install globally
+```
+npm install abogado -g
+```
+
 ## Usage
 ```
 Usage: abogado <package-dir> [options]
