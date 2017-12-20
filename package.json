@@ -1,6 +1,6 @@
 {
   "name": "abogado",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Checks a package's dependencies for compliance with a specified licensing policy.",
   "author": "Gary DeReese Jr",
   "license": "MIT",
@@ -13,6 +13,9 @@
   },
   "main": "dist/index.js",
   "bin": "dist/index.js",
+  "files": [
+    "dist/*.js"
+  ],
   "scripts": {
     "build": "tsc",
     "prepublish": "tsc",
