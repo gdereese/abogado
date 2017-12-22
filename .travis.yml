@@ -4,3 +4,12 @@ jobs:
   include:
     - stage: build
       script: npm build
+    - stage: deploy
+      script: echo "Publishing to npm..."
+      deploy:
+        provider: npm
+        api_key: $NPM_API_KEY
+        on:
+          branch: master
+          tags: true
+          skip_cleanup: true
