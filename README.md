@@ -1,4 +1,6 @@
 # abogado
+[![npm version](https://badge.fury.io/js/abogado.svg)](https://badge.fury.io/js/abogado)
+
 Checks a package's dependencies for compliance with a specified licensing policy.
 
 ## Summary
