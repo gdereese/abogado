@@ -5,7 +5,7 @@ jobs:
     script: npm build
     deploy:
       provider: npm
-      api_key: $NPM_API_KEY
+      api_key: $NPM_API_TOKEN
       on:
         tags: true
         skip_cleanup: true
