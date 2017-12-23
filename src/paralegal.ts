@@ -11,38 +11,38 @@ export function evaluate(pkg: Package, allow: string[], deny: string[]): Violati
     return undefined;
   }
 
-  if (allow) {
-    return evaluatePermitPolicy(pkg, allow);
-  } else if (deny) {
-    return evaluateProhibitPolicy(pkg, deny);
+  if (allow && allow.length > 0) {
+    return evaluateWhitelistPolicy(pkg, allow);
+  } else if (deny && deny.length > 0) {
+    return evaluateBlacklistPolicy(pkg, deny);
   }
 }
 
-function evaluatePermitPolicy(pkg: Package, permittedLicenses: string[]): Violation[] {
-  const violations = new Array<Violation>();
+function evaluateBlacklistPolicy(pkg: Package, blacklist: string[]): Violation[] {
+  const violators = _.filter(pkg.dependencies, (dependency: Dependency) => {
+    return _.some(blacklist, (licensePattern: string) => new RegExp(licensePattern).test(dependency.license));
+  });
 
-  _.forEach(pkg.dependencies, (dependency: Dependency) => {
-    if (!_.some(permittedLicenses, (license: string) => new RegExp(license).test(dependency.license))) {
-      violations.push({
-        dependencyName: dependency.name,
-        reason: 'License \'' + dependency.license + '\' is not explicitly permitted by policy.'
-      });
-    }
+  const violations = _.map(violators, (dependency: Dependency) => {
+    return {
+      dependencyName: dependency.name,
+      reason: 'License \'' + dependency.license + '\' is explicitly prohibited by policy.'
+    };
   });
 
   return violations;
 }
 
-function evaluateProhibitPolicy(pkg: Package, prohibitedLicenses: string[]): Violation[] {
-  const violations = new Array<Violation>();
+function evaluateWhitelistPolicy(pkg: Package, whitelist: string[]): Violation[] {
+  const violators = _.filter(pkg.dependencies, (dependency: Dependency) => {
+    return !_.some(whitelist, (licensePattern: string) => new RegExp(licensePattern).test(dependency.license));
+  });
 
-  _.forEach(pkg.dependencies, (dependency: Dependency) => {
-    if (_.some(prohibitedLicenses, (license: string) => new RegExp(license).test(dependency.license))) {
-      violations.push({
-        dependencyName: dependency.name,
-        reason: 'License \'' + dependency.license + '\' is explicitly prohibited by policy.'
-      });
-    }
+  const violations = _.map(violators, (dependency: Dependency) => {
+    return {
+      dependencyName: dependency.name,
+      reason: 'License \'' + dependency.license + '\' is not explicitly permitted by policy.'
+    };
   });
 
   return violations;

@@ -7,8 +7,8 @@ describe('validator', () => {
       deny: ['bar']
     };
 
-    const isValid = validator.validate(program);
+    const errors = validator.validate(program);
 
-    expect(isValid).toBe(false);
+    expect(errors.length).toBe(1);
   });
 });

@@ -11,8 +11,11 @@ import * as validator from './validator';
 import { Violation } from './violation.class';
 
 export function run(packageDir: string) {
-  const isValid = validator.validate(program);
-  if (!isValid) {
+  const validationErrors = validator.validate(program);
+  if (validationErrors.length > 0) {
+    _.forEach(validationErrors, (error: string) => {
+      logger.error('*** ERROR: ' + error);
+    });
     process.exit(2);
   }
 
