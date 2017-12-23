@@ -4,12 +4,12 @@
   "description": "Checks a package's dependencies for compliance with a specified licensing policy.",
   "author": "Gary DeReese Jr",
   "license": "MIT",
-  "repository": { 
-    "type" : "git", 
-    "url" : "https://github.com/gdereese/abogado.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gdereese/abogado.git"
   },
   "bugs": {
-    "url" : "https://github.com/gdereese/abogado/issues"
+    "url": "https://github.com/gdereese/abogado/issues"
   },
   "main": "dist/index.js",
   "bin": "dist/index.js",
@@ -18,11 +18,14 @@
   ],
   "scripts": {
     "build": "tsc",
-    "prepublish": "tsc"
+    "prepublish": "tsc",
+    "test": "jasmine-ts test/**/*.spec.ts"
   },
   "devDependencies": {
+    "@types/jasmine": "^2.8.2",
     "@types/lodash": "^4.14.88",
     "@types/node": "^8.0.57",
+    "jasmine-ts": "^0.2.1",
     "tslint": "^5.8.0",
     "typescript": "^2.6.2"
   },
