@@ -25,8 +25,8 @@ npm install abogado -g
 Usage: abogado <package-dir> [options]
 
   Options:
-    -a, --allow <licenses>    List of licenses to allow
-    -d, --deny <licenses>     List of licenses to deny
+    -a, --allow <licenses>    List of licenses to allow (supports RegEx patterns)
+    -d, --deny <licenses>     List of licenses to deny (supports RegEx patterns)
     -o, --output-path <path>  Path to report output file
     -v, --verbose             Enable verbose logging
     -h, --help                output usage information
