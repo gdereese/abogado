@@ -38,10 +38,10 @@ https://spdx.org/licenses
 ## Examples
 #### Allow only MIT and any version of the Apache license in the current package
 ```
-abogado . -allow MIT,Apache-*
+abogado . --allow MIT,Apache-*
 ```
 
 #### Allow any license but the Affero GPL
 ```
-abogado . -deny AGPL-1.0
+abogado . --deny AGPL-1.0
 ```
