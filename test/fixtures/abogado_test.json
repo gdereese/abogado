@@ -1,0 +1,12 @@
+{
+  "outputPath": "path/to/stuff",
+  "policy": {
+    "allow": {
+      "licenses": ["foo", "bar"]
+    }, 
+    "deny": {
+      "licenses": ["baz", "qux"]
+    }
+  },
+  "verbose": true
+}

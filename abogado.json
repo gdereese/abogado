@@ -1,0 +1,13 @@
+{
+  "policy": {
+    "allow": {
+      "licenses": [
+        "MIT",
+        "ISC",
+        "Apache-*",
+        "BSD-3-Clause"
+      ]
+    }
+  },
+  "verbose": true
+}

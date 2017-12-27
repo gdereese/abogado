@@ -31,9 +31,33 @@ Usage: abogado <package-dir> [options]
     -v, --verbose             Enable verbose logging
     -h, --help                output usage information
 ```
-
 Refer to licenses using their SPDX identifiers.  The list of licenses available are here:
 https://spdx.org/licenses
+
+### abogado.json
+Alternatively, options can be read from an `abogado.json` file located in the package root directory.  
+In combination, options can also be specified on the command-line to override those options found in the file.
+
+```javascript
+{
+  "outputPath": "path/to/stuff",
+  "policy": {
+    "allow": {
+      "licenses": [
+        "foo", 
+        "bar"
+      ]
+    }, 
+    "deny": {
+      "licenses": [
+        "baz", 
+        "qux"
+      ]
+    }
+  },
+  "verbose": true
+}
+```
 
 ## Examples
 #### Allow only MIT and any version of the Apache license in the current package

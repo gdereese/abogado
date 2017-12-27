@@ -7,7 +7,7 @@
     {
       "type": "node",
       "request": "launch",
-      "name": "Launch Program",
+      "name": "Launch Program w/ Command-line Options",
       "preLaunchTask": "build",      
       "program": "${workspaceFolder}/dist/index.js",
       "args": [
@@ -15,6 +15,16 @@
         "--allow",
         "MIT,ISC,Apache-*,BSD-3-Clause",
         "--verbose"
+      ]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Launch Program w/ Options File",
+      "preLaunchTask": "build",      
+      "program": "${workspaceFolder}/dist/index.js",
+      "args": [
+        ".",
       ]
     }
   ]

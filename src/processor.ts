@@ -7,6 +7,7 @@ import * as logger from './logger';
 import * as packageBuilder from './package-builder';
 import * as paralegal from './paralegal';
 import * as reportBuilder from './report-builder';
+import * as settingsProvider from './settings-provider';
 import * as validator from './validator';
 import { Violation } from './violation.class';
 
@@ -19,6 +20,8 @@ export function run(packageDir: string) {
     process.exit(2);
   }
 
+  const settings = settingsProvider.getSettings('abogado.json');
+
   logger.info('Processing started.');
 
   logger.verbose('Collecting dependencies...');
@@ -27,9 +30,9 @@ export function run(packageDir: string) {
   const pkg = packageBuilder.build(packageLockPath, dependenciesDir);
 
   let violations: Violation[];
-  if (program.allow || program.deny) {
+  if (settings.policy.allow || settings.policy.deny) {
     logger.verbose('Evaluating dependencies for policy violations...');
-    violations = paralegal.evaluate(pkg, program.allow, program.deny);
+    violations = paralegal.evaluate(pkg, settings.policy);
 
     if ((violations || []).length > 0) {
       _.forEach(violations, (violation: Violation) => {
@@ -40,11 +43,11 @@ export function run(packageDir: string) {
     }
   }
 
-  if (program.outputPath) {
+  if (settings.outputPath) {
     logger.verbose('Generating report...');
-    const report = reportBuilder.build(pkg, program, violations);
-    fs.writeFileSync(program.outputPath, report);
-    logger.verbose('Report written to ' + path.resolve(program.outputPath) + '.');
+    const report = reportBuilder.build(pkg, settings, violations);
+    fs.writeFileSync(settings.outputPath, report);
+    logger.verbose('Report written to ' + path.resolve(settings.outputPath) + '.');
   }
 
   logger.info('Processing complete.');

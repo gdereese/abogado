@@ -12,10 +12,16 @@ describe('paralegal', () => {
         }
       ]
     };
-    const allow = ['foo'];
-    const deny = new Array<string>();
+    const policy = {
+      allow: {
+        licenses: ['foo']
+      },
+      deny: {
+        licenses: new Array<string>()
+      }
+    };
 
-    const violations = paralegal.evaluate(pkg, allow, deny);
+    const violations = paralegal.evaluate(pkg, policy);
 
     expect(violations.length).toBe(0);
   });
@@ -31,10 +37,16 @@ describe('paralegal', () => {
         }
       ]
     };
-    const allow = new Array<string>();
-    const deny = ['bar'];
+    const policy = {
+      allow: {
+        licenses: new Array<string>()
+      },
+      deny: {
+        licenses: ['bar']
+      }
+    };
 
-    const violations = paralegal.evaluate(pkg, allow, deny);
+    const violations = paralegal.evaluate(pkg, policy);
 
     expect(violations.length).toBe(0);
   });
@@ -50,10 +62,16 @@ describe('paralegal', () => {
         }
       ]
     };
-    const allow = ['bar'];
-    const deny = new Array<string>();
+    const policy = {
+      allow: {
+        licenses: ['bar']
+      },
+      deny: {
+        licenses: new Array<string>()
+      }
+    };
 
-    const violations = paralegal.evaluate(pkg, allow, deny);
+    const violations = paralegal.evaluate(pkg, policy);
 
     expect(violations.length).toBe(1);
   });
@@ -69,10 +87,16 @@ describe('paralegal', () => {
         }
       ]
     };
-    const allow = new Array<string>();
-    const deny = ['foo'];
+    const policy = {
+      allow: {
+        licenses: new Array<string>()
+      },
+      deny: {
+        licenses: ['foo']
+      }
+    };
 
-    const violations = paralegal.evaluate(pkg, allow, deny);
+    const violations = paralegal.evaluate(pkg, policy);
 
     expect(violations.length).toBe(1);
   });

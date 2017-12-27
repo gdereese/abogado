@@ -3,24 +3,25 @@ import * as _ from 'lodash';
 import { Dependency } from './dependency.class';
 import { Package } from './package.class';
 import { Policy } from './policy.class';
+import { PolicyList } from './policy-list.class';
 import { Violation } from './violation.class';
 
-export function evaluate(pkg: Package, allow: string[], deny: string[]): Violation[] {
+export function evaluate(pkg: Package, policy: Policy): Violation[] {
   // skip evaluation if no policy is specified
-  if (!allow && !deny) {
+  if (!policy || (!policy.allow && !policy.deny)) {
     return undefined;
   }
 
-  if (allow && allow.length > 0) {
-    return evaluateWhitelistPolicy(pkg, allow);
-  } else if (deny && deny.length > 0) {
-    return evaluateBlacklistPolicy(pkg, deny);
+  if (policy.allow && policy.allow.licenses.length > 0) {
+    return evaluateWhitelistPolicy(pkg, policy.allow);
+  } else if (policy.deny && policy.deny.licenses.length > 0) {
+    return evaluateBlacklistPolicy(pkg, policy.deny);
   }
 }
 
-function evaluateBlacklistPolicy(pkg: Package, blacklist: string[]): Violation[] {
+function evaluateBlacklistPolicy(pkg: Package, blacklist: PolicyList): Violation[] {
   const violators = _.filter(pkg.dependencies, (dependency: Dependency) => {
-    return _.some(blacklist, (licensePattern: string) => new RegExp(licensePattern).test(dependency.license));
+    return _.some(blacklist.licenses, (licensePattern: string) => new RegExp(licensePattern).test(dependency.license));
   });
 
   const violations = _.map(violators, (dependency: Dependency) => {
@@ -33,9 +34,9 @@ function evaluateBlacklistPolicy(pkg: Package, blacklist: string[]): Violation[]
   return violations;
 }
 
-function evaluateWhitelistPolicy(pkg: Package, whitelist: string[]): Violation[] {
+function evaluateWhitelistPolicy(pkg: Package, whitelist: PolicyList): Violation[] {
   const violators = _.filter(pkg.dependencies, (dependency: Dependency) => {
-    return !_.some(whitelist, (licensePattern: string) => new RegExp(licensePattern).test(dependency.license));
+    return !_.some(whitelist.licenses, (licensePattern: string) => new RegExp(licensePattern).test(dependency.license));
   });
 
   const violations = _.map(violators, (dependency: Dependency) => {
