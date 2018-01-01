@@ -23,13 +23,15 @@ function addDependency(name: string, dependenciesDir: string, dependencies: Depe
   }
 }
 
-export function build(packageLockPath: string, dependenciesDir: string): Package {
+export function build(packageDir: string): Package {
+  const packageLockPath = path.join(packageDir, 'package-lock.json');
   const packageLock = JSON.parse(fs.readFileSync(packageLockPath).toString());
 
   const pkg = {
     dependencies: new Array<Dependency>()
   };
 
+  const dependenciesDir = path.join(packageDir, 'node_modules');
   const dependencyNames = _.keys(packageLock.dependencies);
   _.forEach(dependencyNames, (name: string) => addDependency(name, dependenciesDir, pkg.dependencies));
 

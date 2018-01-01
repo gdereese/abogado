@@ -25,9 +25,7 @@ export function run(packageDir: string) {
   logger.info('Processing started.');
 
   logger.verbose('Collecting dependencies...');
-  const packageLockPath = path.join(packageDir, 'package-lock.json');
-  const dependenciesDir = path.join(packageDir, 'node_modules');
-  const pkg = packageBuilder.build(packageLockPath, dependenciesDir);
+  const pkg = packageBuilder.build(packageDir);
 
   let violations: Violation[];
   if (settings.policy.allow || settings.policy.deny) {
