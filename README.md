@@ -31,6 +31,10 @@ Usage: abogado <package-dir> [options]
     -v, --verbose             Enable verbose logging
     -h, --help                output usage information
 ```
+
+abogado reviews dependencies by reading the project-lock.json file for the specified package.  Therefore, the package being checked
+MUST be installed prior to running this utility.
+
 Refer to licenses using their SPDX identifiers.  The list of licenses available are here:
 https://spdx.org/licenses
 
