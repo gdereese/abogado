@@ -22,6 +22,7 @@ export function run(packageDir: string) {
 
   const settings = settingsProvider.getSettings('abogado.json');
 
+  logger.info('');
   logger.info('Processing started.');
 
   logger.verbose('Collecting dependencies...');
@@ -56,6 +57,13 @@ export function run(packageDir: string) {
   }
 
   logger.info('Processing complete.');
+  logger.info(
+    pkg.dependencies.length +
+      ' packages audited, ' +
+      (violations || []).length +
+      ' violations found.'
+  );
+  logger.info('');
 
   if ((violations || []).length > 0) {
     process.exit(1);
