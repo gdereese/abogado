@@ -2,8 +2,8 @@ import * as _ from 'lodash';
 
 import { Dependency } from './dependency.class';
 import { Package } from './package.class';
-import { Policy } from './policy.class';
 import { PolicyList } from './policy-list.class';
+import { Policy } from './policy.class';
 import { Violation } from './violation.class';
 
 export function evaluate(pkg: Package, policy: Policy): Violation[] {
@@ -19,30 +19,46 @@ export function evaluate(pkg: Package, policy: Policy): Violation[] {
   }
 }
 
-function evaluateBlacklistPolicy(pkg: Package, blacklist: PolicyList): Violation[] {
+function evaluateBlacklistPolicy(
+  pkg: Package,
+  blacklist: PolicyList
+): Violation[] {
   const violators = _.filter(pkg.dependencies, (dependency: Dependency) => {
-    return _.some(blacklist.licenses, (licensePattern: string) => new RegExp(licensePattern).test(dependency.license));
+    return _.some(blacklist.licenses, (licensePattern: string) =>
+      new RegExp(licensePattern).test(dependency.license)
+    );
   });
 
   const violations = _.map(violators, (dependency: Dependency) => {
     return {
       dependencyName: dependency.name,
-      reason: 'License \'' + dependency.license + '\' is explicitly prohibited by policy.'
+      reason:
+        "License '" +
+        dependency.license +
+        "' is explicitly prohibited by policy."
     };
   });
 
   return violations;
 }
 
-function evaluateWhitelistPolicy(pkg: Package, whitelist: PolicyList): Violation[] {
+function evaluateWhitelistPolicy(
+  pkg: Package,
+  whitelist: PolicyList
+): Violation[] {
   const violators = _.filter(pkg.dependencies, (dependency: Dependency) => {
-    return !_.some(whitelist.licenses, (licensePattern: string) => new RegExp(licensePattern).test(dependency.license));
+    return !_.some(whitelist.licenses, (licensePattern: string) =>
+      new RegExp(licensePattern).test(dependency.license)
+    );
   });
 
   const violations = _.map(violators, (dependency: Dependency) => {
     return {
       dependencyName: dependency.name,
-      reason: 'License \'' + dependency.license + '\' is not explicitly permitted by policy.'
+      reason:
+        "License '" +
+        dependency.license +
+        "' is not explicitly permitted by policy."
     };
   });
 

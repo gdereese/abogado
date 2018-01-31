@@ -34,7 +34,12 @@ export function run(packageDir: string) {
 
     if ((violations || []).length > 0) {
       _.forEach(violations, (violation: Violation) => {
-        logger.error('*** VIOLATION (' + violation.dependencyName + '): ' + violation.reason);
+        logger.error(
+          '*** VIOLATION (' +
+            violation.dependencyName +
+            '): ' +
+            violation.reason
+        );
       });
     } else {
       logger.info('No policy violations found.');
@@ -45,7 +50,9 @@ export function run(packageDir: string) {
     logger.verbose('Generating report...');
     const report = reportBuilder.build(pkg, settings, violations);
     fs.writeFileSync(settings.outputPath, report);
-    logger.verbose('Report written to ' + path.resolve(settings.outputPath) + '.');
+    logger.verbose(
+      'Report written to ' + path.resolve(settings.outputPath) + '.'
+    );
   }
 
   logger.info('Processing complete.');

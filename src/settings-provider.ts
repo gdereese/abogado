@@ -9,7 +9,9 @@ export function getSettings(settingsFilePath: string): Settings {
   const settings = new Settings();
 
   if (fs.existsSync(settingsFilePath)) {
-    const fileSettings = JSON.parse(fs.readFileSync(settingsFilePath).toString());
+    const fileSettings = JSON.parse(
+      fs.readFileSync(settingsFilePath).toString()
+    );
     _.assign(settings, fileSettings);
   }
 

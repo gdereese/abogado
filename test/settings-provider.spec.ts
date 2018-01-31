@@ -15,8 +15,12 @@ describe('settings-provider', () => {
     const settings = settingsProvider.getSettings(settingsFilePath);
 
     expect(settings.outputPath).toBe(program.outputPath);
-    expect(settings.policy.allow.licenses).toEqual(jasmine.arrayWithExactContents(program.allow));
-    expect(settings.policy.deny.licenses).toEqual(jasmine.arrayWithExactContents(program.deny));
+    expect(settings.policy.allow.licenses).toEqual(
+      jasmine.arrayWithExactContents(program.allow)
+    );
+    expect(settings.policy.deny.licenses).toEqual(
+      jasmine.arrayWithExactContents(program.deny)
+    );
     expect(settings.verbose).toBe(program.verbose);
   });
 
@@ -25,11 +29,17 @@ describe('settings-provider', () => {
 
     const settings = settingsProvider.getSettings(settingsFilePath);
 
-    const fileSettings = JSON.parse(fs.readFileSync(settingsFilePath).toString());
+    const fileSettings = JSON.parse(
+      fs.readFileSync(settingsFilePath).toString()
+    );
 
     expect(settings.outputPath).toBe(fileSettings.outputPath);
-    expect(settings.policy.allow.licenses).toEqual(jasmine.arrayWithExactContents(fileSettings.policy.allow.licenses));
-    expect(settings.policy.deny.licenses).toEqual(jasmine.arrayWithExactContents(fileSettings.policy.deny.licenses));
+    expect(settings.policy.allow.licenses).toEqual(
+      jasmine.arrayWithExactContents(fileSettings.policy.allow.licenses)
+    );
+    expect(settings.policy.deny.licenses).toEqual(
+      jasmine.arrayWithExactContents(fileSettings.policy.deny.licenses)
+    );
     expect(settings.verbose).toBe(fileSettings.verbose);
   });
 
@@ -40,7 +50,9 @@ describe('settings-provider', () => {
 
     const settings = settingsProvider.getSettings(settingsFilePath);
 
-    const fileSettings = JSON.parse(fs.readFileSync(settingsFilePath).toString());
+    const fileSettings = JSON.parse(
+      fs.readFileSync(settingsFilePath).toString()
+    );
 
     expect(settings.outputPath).toBe(program.outputPath);
   });

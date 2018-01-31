@@ -3,7 +3,7 @@
   "policy": {
     "allow": {
       "licenses": ["foo", "bar"]
-    }, 
+    },
     "deny": {
       "licenses": ["baz", "qux"]
     }

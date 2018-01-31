@@ -1,7 +1,8 @@
 {
   "name": "abogado",
   "version": "0.2.0",
-  "description": "Checks a package's dependencies for compliance with a specified licensing policy.",
+  "description":
+    "Checks a package's dependencies for compliance with a specified licensing policy.",
   "author": "Gary DeReese Jr",
   "license": "MIT",
   "repository": {
@@ -13,12 +14,11 @@
   },
   "main": "dist/index.js",
   "bin": "dist/index.js",
-  "files": [
-    "dist/*.js"
-  ],
+  "files": ["dist/*.js"],
   "scripts": {
-    "build": "tsc",
-    "prepublish": "tsc",
+    "build": "npm run-script lint && tsc",
+    "lint": "tslint --project tslint.json",
+    "prepublish": "npm run-script lint && tsc",
     "test": "jasmine-ts test/**/*.spec.ts"
   },
   "devDependencies": {
@@ -26,7 +26,9 @@
     "@types/lodash": "^4.14.88",
     "@types/node": "^8.0.57",
     "jasmine-ts": "^0.2.1",
+    "prettier": "^1.10.2",
     "tslint": "^5.8.0",
+    "tslint-config-prettier": "^1.6.0",
     "typescript": "^2.6.2"
   },
   "dependencies": {
