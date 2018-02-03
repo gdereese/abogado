@@ -6,8 +6,11 @@ import * as logger from './logger';
 import * as processor from './processor';
 
 program
-  .arguments('<package-dir>')
-  .usage('<package-dir> [options]')
+  .option(
+    '-p, --package-dir <path>',
+    'Directory of package to audit (must contain package-lock.json)',
+    '.'
+  )
   .option(
     '-a, --allow <licenses>',
     'List of licenses to allow (supports RegEx patterns)',
@@ -20,14 +23,12 @@ program
   )
   .option('-o, --output-path <path>', 'Path to report output file')
   .option('-v, --verbose', 'Enable verbose logging')
-  .action(processor.run)
+  .on('--help', () => {
+    console.log();
+  })
   .parse(process.argv);
 
-// if we get here, the required param(s) weren't supplied;
-// display help info and bail out
-logger.info('');
-logger.error('*** ERROR: package directory not specified');
-program.help();
+processor.run();
 
 function split(val: string): string[] {
   return val.split(',');

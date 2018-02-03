@@ -2,6 +2,7 @@ import * as program from 'commander';
 import * as fs from 'fs';
 import * as _ from 'lodash';
 
+import * as logger from './logger';
 import { Policy } from './policy';
 import { Settings } from './settings';
 
@@ -13,6 +14,14 @@ export function getSettings(settingsFilePath: string): Settings {
       fs.readFileSync(settingsFilePath).toString()
     );
     _.assign(settings, fileSettings);
+
+    logger.verbose(
+      "Using policy settings from file '" + settingsFilePath + "'."
+    );
+  } else {
+    logger.verbose(
+      'No policy settings file found in package directory, assuming defaults.'
+    );
   }
 
   if (program.allow !== undefined) {

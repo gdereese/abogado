@@ -28,11 +28,12 @@ npm install abogado -g
 ## Usage
 
 ```
-Usage: abogado <package-dir> [options]
+Usage: abogado [options]
 
   Options:
+    -p, --package-dir <path>  Directory of package to audit (must contain package-lock.json) (default: .)
     -a, --allow <licenses>    List of licenses to allow (supports RegEx patterns)
-    -d, --deny <licenses>     List of licenses to deny (supports RegEx patterns)
+    -d, --deny <licenses>     List of licenses to deny (supports Regex patterns)
     -o, --output-path <path>  Path to report output file
     -v, --verbose             Enable verbose logging
     -h, --help                output usage information

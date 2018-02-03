@@ -11,7 +11,7 @@ import * as settingsProvider from './settings-provider';
 import * as validator from './validator';
 import { Violation } from './violation';
 
-export function run(packageDir: string) {
+export function run() {
   logger.info('');
 
   const validationErrors = validator.validate(program);
@@ -22,12 +22,19 @@ export function run(packageDir: string) {
     process.exit(2);
   }
 
-  const settings = settingsProvider.getSettings('abogado.json');
+  logger.verbose(
+    "Auditing package in directory '" + path.resolve(program.packageDir) + "'."
+  );
+
+  // look for settings file in specified package dir,
+  // fallback to current directory if not specified
+  const settingsFilePath = path.resolve(program.packageDir, 'abogado.json');
+  const settings = settingsProvider.getSettings(settingsFilePath);
 
   logger.info('Processing started.');
 
   logger.verbose('Collecting dependencies...');
-  const pkg = packageBuilder.build(packageDir);
+  const pkg = packageBuilder.build(program.packageDir);
 
   let violations: Violation[];
   if (settings.policy.allow || settings.policy.deny) {
