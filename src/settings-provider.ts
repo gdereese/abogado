@@ -2,8 +2,8 @@ import * as program from 'commander';
 import * as fs from 'fs';
 import * as _ from 'lodash';
 
-import { Policy } from './policy.class';
-import { Settings } from './settings.class';
+import { Policy } from './policy';
+import { Settings } from './settings';
 
 export function getSettings(settingsFilePath: string): Settings {
   const settings = new Settings();

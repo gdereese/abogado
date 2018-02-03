@@ -1,4 +1,4 @@
-import { PolicyList } from './policy-list.class';
+import { PolicyList } from './policy-list';
 
 export class Policy {
   public allow: PolicyList;

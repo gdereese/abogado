@@ -1,8 +1,8 @@
 import { Dictionary } from 'lodash';
 
-import { Dependency } from './dependency.class';
-import { Policy } from './policy.class';
-import { Violation } from './violation.class';
+import { Dependency } from './dependency';
+import { Policy } from './policy';
+import { Violation } from './violation';
 
 export class Report {
   public dependenciesByLicense: Dictionary<Dependency[]>;

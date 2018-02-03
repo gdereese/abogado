@@ -1,4 +1,4 @@
-import { Policy } from './policy.class';
+import { Policy } from './policy';
 
 export class Settings {
   public outputPath: string;

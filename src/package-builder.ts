@@ -2,8 +2,8 @@ import * as fs from 'fs';
 import * as _ from 'lodash';
 import * as path from 'path';
 
-import { Dependency } from './dependency.class';
-import { Package } from './package.class';
+import { Dependency } from './dependency';
+import { Package } from './package';
 
 function addDependency(
   name: string,

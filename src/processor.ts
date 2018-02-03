@@ -9,7 +9,7 @@ import * as paralegal from './paralegal';
 import * as reportBuilder from './report-builder';
 import * as settingsProvider from './settings-provider';
 import * as validator from './validator';
-import { Violation } from './violation.class';
+import { Violation } from './violation';
 
 export function run(packageDir: string) {
   logger.info('');

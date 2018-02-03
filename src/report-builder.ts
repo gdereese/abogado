@@ -1,9 +1,9 @@
 import * as _ from 'lodash';
 
-import { Package } from './package.class';
-import { Report } from './report.class';
-import { Settings } from './settings.class';
-import { Violation } from './violation.class';
+import { Package } from './package';
+import { Report } from './report';
+import { Settings } from './settings';
+import { Violation } from './violation';
 
 export function build(
   pkg: Package,

@@ -1,10 +1,10 @@
 import * as _ from 'lodash';
 
-import { Dependency } from './dependency.class';
-import { Package } from './package.class';
-import { PolicyList } from './policy-list.class';
-import { Policy } from './policy.class';
-import { Violation } from './violation.class';
+import { Dependency } from './dependency';
+import { Package } from './package';
+import { Policy } from './policy';
+import { PolicyList } from './policy-list';
+import { Violation } from './violation';
 
 export function evaluate(pkg: Package, policy: Policy): Violation[] {
   // skip evaluation if no policy is specified
