@@ -25,9 +25,9 @@ program
 
 // if we get here, the required param(s) weren't supplied;
 // display help info and bail out
+logger.info('');
 logger.error('*** ERROR: package directory not specified');
 program.help();
-process.exit(2);
 
 function split(val: string): string[] {
   return val.split(',');
