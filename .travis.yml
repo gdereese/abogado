@@ -7,7 +7,6 @@ node_js:
   
 script: 
   - npm test
-  - npm run-script license-check
 
 deploy:
   provider: npm
