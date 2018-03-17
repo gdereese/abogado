@@ -37,7 +37,7 @@ export function run() {
   const pkg = packageBuilder.build(program.packageDir);
 
   let violations: Violation[];
-  if (settings.policy.allow || settings.policy.deny) {
+  if (settings.policy && (settings.policy.allow || settings.policy.deny)) {
     logger.verbose('Evaluating dependencies for policy violations...');
     violations = paralegal.evaluate(pkg, settings.policy);
 
@@ -53,6 +53,8 @@ export function run() {
     } else {
       logger.info('No policy violations found.');
     }
+  } else {
+    logger.info('No policy specified.');
   }
 
   if (settings.outputPath) {
@@ -65,12 +67,14 @@ export function run() {
   }
 
   logger.info('Processing complete.');
-  logger.info(
-    pkg.dependencies.length +
-      ' packages audited, ' +
-      (violations || []).length +
-      ' violations found.'
-  );
+  if (settings.policy && (settings.policy.allow || settings.policy.deny)) {
+    logger.info(
+      pkg.dependencies.length +
+        ' packages audited, ' +
+        (violations || []).length +
+        ' violations found.'
+    );
+  }
 
   logger.info('');
   if ((violations || []).length > 0) {
