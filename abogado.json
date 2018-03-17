@@ -1,7 +1,15 @@
 {
   "policy": {
     "allow": {
-      "licenses": ["MIT", "ISC", "Apache-", "BSD-3-Clause"]
+      "licenses": [
+        "Apache-",
+        "BSD-",
+        "CC0-",
+        "MIT",
+        "ISC",
+        "undefined",
+        "Unlicense"
+      ]
     }
   },
   "verbose": true

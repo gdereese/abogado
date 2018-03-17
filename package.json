@@ -17,8 +17,12 @@
   "files": ["dist/*.js"],
   "scripts": {
     "build": "npm run-script lint && tsc",
+    "license-check": "node .",
     "lint": "tslint --project tsconfig.json",
-    "prepublish": "npm run-script lint && tsc",
+    "postversion": "git push && git push --tags",
+    "prepublishOnly": "npm run-script lint && tsc",
+    "preversion": "npm test",
+    "version": "npm run-script build",
     "test": "jasmine-ts test/**/*.spec.ts"
   },
   "devDependencies": {
