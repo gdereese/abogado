@@ -17,7 +17,7 @@
   "files": ["dist/*.js"],
   "scripts": {
     "build": "npm run-script lint && tsc",
-    "license-check": "node .",
+    "license-check": "node dist/index.js",
     "lint": "tslint --project tsconfig.json",
     "postversion": "git push && git push --tags",
     "prepublishOnly": "npm run-script lint && tsc",
