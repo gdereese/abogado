@@ -18,7 +18,7 @@ deploy:
 
 jobs:
   include:
-    - stage: NPM Release
+    - stage: Publish
       node_js: 'node'
       deploy:
         provider: npm
