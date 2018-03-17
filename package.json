@@ -1,6 +1,6 @@
 {
   "name": "abogado",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description":
     "Checks a package's dependencies for compliance with a specified licensing policy.",
   "author": "Gary DeReese Jr",
