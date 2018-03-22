@@ -1,5 +1,14 @@
 language: node_js
 
+addons:
+  sonarcloud:
+    organization: $SONARCLOUD_ORG_KEY
+    token:
+      secure: $SONARCLOUD_TOKEN
+
+jdk:
+  - oraclejdk8
+
 node_js:
   - 'node'
   - '8'
@@ -7,6 +16,11 @@ node_js:
   
 script: 
   - npm test
+  - sonar-scanner
+
+cache:
+  directories:
+    - '$HOME/.sonar/cache'
 
 jobs:
   include:
