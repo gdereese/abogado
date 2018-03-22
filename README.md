@@ -1,6 +1,7 @@
 # abogado
 
 [![Build Status](https://travis-ci.org/gdereese/abogado.svg?branch=master)](https://travis-ci.org/gdereese/abogado)
+[![SonarCloud Quality](https://sonarcloud.io/api/project_badges/measure?project=abogado&metric=alert_status)](https://sonarcloud.io/dashboard?id=abogado)
 [![npm version](https://badge.fury.io/js/abogado.svg)](https://badge.fury.io/js/abogado)
 
 Checks a package's dependencies for compliance with a specified licensing policy.
