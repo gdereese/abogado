@@ -16,7 +16,6 @@ node_js:
   
 script: 
   - npm test
-  - sonar-scanner
 
 cache:
   directories:
@@ -24,6 +23,9 @@ cache:
 
 jobs:
   include:
+    - stage: Analyze
+      node_js: 'node'
+      script: sonar-scanner
     - stage: Publish
       node_js: 'node'
       deploy:
