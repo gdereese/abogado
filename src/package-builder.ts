@@ -26,7 +26,7 @@ function addDependency(
     version: dependencyPackage.version
   };
   const dependencyExists = (d: Dependency) => {
-    return d.name === dependency.name && d.version === d.version;
+    return d.name === dependency.name && d.version === dependency.version;
   };
   if (!_.some(dependencies, dependencyExists)) {
     dependencies.push(dependency);
