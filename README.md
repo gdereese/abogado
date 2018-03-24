@@ -74,10 +74,12 @@ In combination, options can also be specified on the command-line to override th
 
 ## Examples
 
+You can reference SPDX identifiers for the licenses you want to allow or deny. Alternatively, you can use RegEx patterns to match multiple licenses.
+
 #### Allow only MIT and any version of the Apache license in the current package
 
 ```
-abogado . --allow MIT,Apache-*
+abogado . --allow MIT,Apache-
 ```
 
 #### Allow any license but the Affero GPL
