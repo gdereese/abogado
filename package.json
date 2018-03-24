@@ -17,13 +17,14 @@
   "files": ["dist/*.js"],
   "scripts": {
     "build": "npm run-script lint && tsc",
+    "coverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" npm test",
     "license-check": "node .",
     "lint": "tslint --project tsconfig.json",
     "postversion": "git push && git push --tags",
     "prepublishOnly": "npm run-script lint && tsc",
     "preversion": "npm test",
     "version": "npm run-script build",
-    "test": "nyc -r lcov -e .ts -x \"*.spec.ts\" jasmine-ts test/**/*.spec.ts"
+    "test": "jasmine-ts test/**/*.spec.ts"
   },
   "devDependencies": {
     "@types/jasmine": "2.8.6",
