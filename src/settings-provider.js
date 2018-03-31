@@ -23,14 +23,16 @@ const settingsProvider = {
     const commandLineSettings = _.assign({}, commandLineArgs);
     let policy = null;
     if (commandLineSettings.allow) {
-      policy = policy || {};
-      policy.allow = policy.allow || {};
-      policy.allow.licenses = commandLineSettings.allow;
+      policy = {};
+      policy.allow = {
+        licenses: commandLineSettings.allow
+      };
     }
     if (commandLineSettings.deny) {
       policy = policy || {};
-      policy.deny = policy.deny || {};
-      policy.deny.licenses = commandLineSettings.deny;
+      policy.deny = {
+        licenses: commandLineSettings.deny
+      };
     }
     if (policy) {
       commandLineSettings.policy = policy;
