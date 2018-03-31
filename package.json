@@ -1,6 +1,6 @@
 {
   "name": "abogado",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description":
     "Checks a package's dependencies for compliance with a specified licensing policy.",
   "keywords": ["nodejs", "licenses"],
