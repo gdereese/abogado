@@ -1,6 +1,3 @@
-env:
-  - SHORT_COMMIT=$(echo $TRAVIS_COMMIT | cut -c 1-7)
-
 language: node_js
 
 addons:
@@ -28,7 +25,7 @@ jobs:
   include:
     - stage: Analyze
       node_js: 'node'
-      script: npm run-script coverage && sonar-scanner -v$SHORT_COMMIT
+      script: npm run-script coverage && sonar-scanner -v$(echo $TRAVIS_COMMIT | cut -c 1-7)
     - stage: Publish
       node_js: 'node'
       deploy:
