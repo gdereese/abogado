@@ -1,4 +1,4 @@
-import * as paralegal from '../src/paralegal';
+const paralegal = require('../src/paralegal');
 
 describe('paralegal', () => {
   it('detects no violation for license specified in whitelist', () => {
@@ -17,7 +17,7 @@ describe('paralegal', () => {
         licenses: ['foo']
       },
       deny: {
-        licenses: new Array<string>()
+        licenses: []
       }
     };
 
@@ -39,7 +39,7 @@ describe('paralegal', () => {
     };
     const policy = {
       allow: {
-        licenses: new Array<string>()
+        licenses: []
       },
       deny: {
         licenses: ['bar']
@@ -67,7 +67,7 @@ describe('paralegal', () => {
         licenses: ['bar']
       },
       deny: {
-        licenses: new Array<string>()
+        licenses: []
       }
     };
 
@@ -89,7 +89,7 @@ describe('paralegal', () => {
     };
     const policy = {
       allow: {
-        licenses: new Array<string>()
+        licenses: []
       },
       deny: {
         licenses: ['foo']

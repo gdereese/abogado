@@ -1,4 +1,4 @@
-import * as validator from '../src/validator';
+const validator = require('../src/validator');
 
 describe('validator', () => {
   it('should not allow both allow and deny lists', () => {

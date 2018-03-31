@@ -1,9 +1,8 @@
-#!/usr/bin/env node
+const path = require('path');
+const program = require('commander');
 
-import * as program from 'commander';
-
-import * as logger from './logger';
-import * as processor from './processor';
+const processor = require('./processor');
+const settingsProvider = require('./settings-provider');
 
 program
   .option(
@@ -28,8 +27,13 @@ program
   })
   .parse(process.argv);
 
-processor.run();
+// look for settings file in specified package dir,
+// fallback to current directory if not specified
+const settingsFilePath = path.resolve(program.packageDir, 'abogado.json');
+const settings = settingsProvider.getSettings(settingsFilePath, program);
 
-function split(val: string): string[] {
+processor.run(settings);
+
+function split(val) {
   return val.split(',');
 }

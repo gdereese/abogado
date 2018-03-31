@@ -7,9 +7,19 @@
       "identifier": "build",
       "type": "npm",
       "script": "build",
-      "problemMatcher": ["$tsc"],
+      "problemMatcher": "$eslint-stylish",
       "group": {
         "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "identifier": "test",
+      "type": "npm",
+      "script": "test",
+      "problemMatcher": "$jasmine",
+      "group": {
+        "kind": "test",
         "isDefault": true
       }
     }

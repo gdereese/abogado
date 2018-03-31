@@ -3,6 +3,7 @@
   "version": "1.0.4",
   "description":
     "Checks a package's dependencies for compliance with a specified licensing policy.",
+  "keywords": ["nodejs", "licenses"],
   "author": "Gary DeReese Jr",
   "license": "MIT",
   "repository": {
@@ -16,27 +17,28 @@
   "bin": "dist/index.js",
   "files": ["dist/*.js"],
   "scripts": {
-    "build": "npm run-script lint && tsc",
+    "build": "npm run-script lint && babel src -d dist",
     "coverage": "nyc -r lcov -e .ts -x \"*.spec.ts\" npm test",
     "license-check": "node .",
-    "lint": "tslint --project tsconfig.json",
+    "lint": "eslint src/** test/**",
     "postversion": "git push && git push --tags",
     "prepublishOnly": "npm run-script lint && tsc",
     "preversion": "npm test",
     "version": "npm run-script build",
-    "test": "jasmine-ts test/**/*.spec.ts"
+    "test": "jasmine test/**/*.spec.js"
   },
   "devDependencies": {
-    "@types/jasmine": "2.8.6",
-    "@types/lodash": "4.14.98",
-    "@types/node": "8.5.9",
-    "jasmine-ts": "0.2.1",
     "nyc": "11.6.0",
-    "prettier": "1.10.2",
-    "sonar-scanner": "3.0.3",
-    "tslint": "5.9.1",
-    "tslint-config-prettier": "1.6.0",
-    "typescript": "2.6.2"
+    "babel-cli": "6.26.0",
+    "eslint": "4.19.1",
+    "eslint-config-prettier": "2.9.0",
+    "eslint-config-standard": "11.0.0",
+    "eslint-plugin-jasmine": "2.9.3",
+    "eslint-plugin-node": "6.0.1",
+    "eslint-plugin-standard": "3.0.1",
+    "jasmine": "3.1.0",
+    "prettier": "1.11.1",
+    "sonar-scanner": "3.0.3"
   },
   "dependencies": {
     "chalk": "2.3.0",
