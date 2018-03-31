@@ -18,7 +18,7 @@
   "files": ["dist/*.js"],
   "scripts": {
     "build": "npm run-script lint && babel src -d dist",
-    "coverage": "nyc -r lcov -e .js -x \"*.spec.js\" npm test",
+    "coverage": "nyc --reporter=lcov npm test",
     "license-check": "node .",
     "lint": "eslint src/** test/**",
     "postversion": "git push && git push --tags",
