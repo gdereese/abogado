@@ -4,16 +4,18 @@
   },
   "extends": [
     "eslint:recommended",
+    "plugin:jasmine/recommended",
     "plugin:node/recommended",
-    "eslint-config-prettier"
+    "plugin:prettier/recommended"
   ],
   "parserOptions": {
     "ecmaVersion": 6,
     "sourceType": "module"
   },
-  "plugins": ["jasmine", "node"],
+  "plugins": ["jasmine", "node", "prettier"],
   "rules": {
     "no-console": 0,
+    "jasmine/new-line-before-expect": 0,
     "node/shebang": 0
   }
 }
