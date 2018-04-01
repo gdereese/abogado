@@ -15,7 +15,7 @@
   },
   "main": "dist/index.js",
   "bin": "dist/index.js",
-  "files": ["dist/*.js"],
+  "files": ["dist/**"],
   "scripts": {
     "build": "npm run-script lint && babel src -d dist",
     "coverage": "nyc --reporter=lcov npm test",
@@ -28,7 +28,6 @@
     "test": "jasmine test/**/*.spec.js"
   },
   "devDependencies": {
-    "nyc": "11.6.0",
     "babel-cli": "6.26.0",
     "eslint": "4.19.1",
     "eslint-config-prettier": "2.9.0",
@@ -37,6 +36,7 @@
     "eslint-plugin-node": "6.0.1",
     "eslint-plugin-standard": "3.0.1",
     "jasmine": "3.1.0",
+    "nyc": "11.6.0",
     "prettier": "1.11.1",
     "sonar-scanner": "3.0.3"
   },
