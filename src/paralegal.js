@@ -24,7 +24,7 @@ function evaluateBlacklistPolicy(pkg, blacklist) {
 
   const violations = _.map(violators, dependency => {
     return {
-      name: dependency.name,
+      dependencyName: dependency.name,
       reason: `License '${
         dependency.license
       }' is explicitly prohibited by policy.`
@@ -43,7 +43,7 @@ function evaluateWhitelistPolicy(pkg, whitelist) {
 
   const violations = _.map(violators, dependency => {
     return {
-      name: dependency.name,
+      dependencyName: dependency.name,
       reason: `License '${
         dependency.license
       }' is not explicitly permitted by policy.`
