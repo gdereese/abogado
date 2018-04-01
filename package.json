@@ -22,7 +22,7 @@
     "license-check": "node .",
     "lint": "eslint src/** test/**",
     "postversion": "git push && git push --tags",
-    "prepublishOnly": "npm run-script lint && tsc",
+    "prepublishOnly": "npm run-script build",
     "preversion": "npm test",
     "version": "npm run-script build",
     "test": "jasmine test/**/*.spec.js"
