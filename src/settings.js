@@ -16,6 +16,7 @@ class Policy {
 class PolicyList {
   constructor(obj) {
     this.licenses = obj.licenses;
+    this.packages = obj.packages;
   }
 }
 

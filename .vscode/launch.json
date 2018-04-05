@@ -21,7 +21,7 @@
       "name": "Debug Program w/ Command-line Options",
       "preLaunchTask": "build",
       "program": "${workspaceFolder}/src/index.js",
-      "args": ["--allow", "MIT,ISC,Apache-,BSD-3-Clause", "--verbose"]
+      "args": ["--allow-licenses", "MIT,ISC,Apache-,BSD-3-Clause", "--verbose"]
     },
     {
       "type": "node",

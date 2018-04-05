@@ -8,19 +8,29 @@ const settingsProvider = require('./settings-provider');
 
 program
   .option(
-    '-p, --package-dir <path>',
-    'Directory of package to audit (must contain package-lock.json)',
-    '.'
-  )
-  .option(
-    '-a, --allow <licenses>',
+    '--allow-licenses <licenses>',
     'List of licenses to allow (supports RegEx patterns)',
     split
   )
   .option(
-    '-d, --deny <licenses>',
-    'List of licenses to deny (supports Regex patterns)',
+    '--allow-packages <packages>',
+    'List of packages to allow (supports RegEx patterns)',
     split
+  )
+  .option(
+    '--deny-licenses <licenses>',
+    'List of licenses to deny (supports RegEx patterns)',
+    split
+  )
+  .option(
+    '--deny-packages <packages>',
+    'List of packages to deny (supports RegEx patterns)',
+    split
+  )
+  .option(
+    '-p, --package-dir <path>',
+    'Directory of package to audit (must contain package-lock.json)',
+    '.'
   )
   .option('-o, --output-path <path>', 'Path to report output file')
   .option('-v, --verbose', 'Enable verbose logging')

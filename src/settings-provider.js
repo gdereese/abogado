@@ -21,21 +21,33 @@ const settingsProvider = {
     // there's currently a minor impedance mismatch between the command-line parameters and the settings schema;
     // align to the schema before proceeding
     const commandLineSettings = _.assign({}, commandLineArgs);
-    let policy = null;
-    if (commandLineSettings.allow) {
-      policy = {};
-      policy.allow = {
-        licenses: commandLineSettings.allow
-      };
+    if (commandLineSettings.allowLicenses) {
+      _.set(
+        commandLineSettings,
+        'policy.allow.licenses',
+        commandLineSettings.allowLicenses
+      );
     }
-    if (commandLineSettings.deny) {
-      policy = policy || {};
-      policy.deny = {
-        licenses: commandLineSettings.deny
-      };
+    if (commandLineSettings.allowPackages) {
+      _.set(
+        commandLineSettings,
+        'policy.allow.packages',
+        commandLineSettings.allowPackages
+      );
     }
-    if (policy) {
-      commandLineSettings.policy = policy;
+    if (commandLineSettings.denyLicenses) {
+      _.set(
+        commandLineSettings,
+        'policy.deny.licenses',
+        commandLineSettings.denyLicenses
+      );
+    }
+    if (commandLineSettings.denyPackages) {
+      _.set(
+        commandLineSettings,
+        'policy.deny.packages',
+        commandLineSettings.denyPackages
+      );
     }
 
     return new Settings(_.assign(fileSettings, commandLineSettings));

@@ -3,12 +3,25 @@ const validator = {
     const errors = [];
 
     if (
-      program.allow &&
-      program.allow.length > 0 &&
-      program.deny &&
-      program.deny.length > 0
+      program.allowLicenses &&
+      program.allowLicenses.length > 0 &&
+      program.denyLicenses &&
+      program.denyLicenses.length > 0
     ) {
-      errors.push('One one of allow or deny lists must be specified, not both');
+      errors.push(
+        'Only one of allow or deny licenses lists must be specified, not both'
+      );
+    }
+
+    if (
+      program.allowPackages &&
+      program.allowPackages.length > 0 &&
+      program.denyPackages &&
+      program.denyPackages.length > 0
+    ) {
+      errors.push(
+        'Only one of allow or deny packages lists must be specified, not both'
+      );
     }
 
     return errors;
