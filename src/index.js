@@ -1,10 +1,14 @@
 #!/usr/bin/env node
 
+const _ = require('lodash');
 const path = require('path');
 const program = require('commander');
 
+const logger = require('./logger');
+const packageBuilder = require('./package-builder');
 const processor = require('./processor');
 const settingsProvider = require('./settings-provider');
+const validator = require('./validator');
 
 program
   .option(
@@ -39,12 +43,29 @@ program
   })
   .parse(process.argv);
 
-// look for settings file in specified package dir,
-// fallback to current directory if not specified
 const settingsFilePath = path.resolve(program.packageDir, 'abogado.json');
 const settings = settingsProvider.getSettings(settingsFilePath, program);
 
+logger.initialize(settings);
+
+logger.info('');
+
+logger.verbose(
+  `Collecting dependencies from package '${program.packageDir}'...`
+);
+settings.package = packageBuilder.build(program.packageDir);
+
+const validationErrors = validator.validate(settings);
+if (validationErrors.length > 0) {
+  _.forEach(validationErrors, error => {
+    logger.error(`*** ERROR: '${error}`);
+  });
+  throw new Error('One or more validation errors were encountered.');
+}
+
 processor.run(settings);
+
+logger.info('');
 
 function split(val) {
   return val.split(',');

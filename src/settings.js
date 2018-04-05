@@ -1,6 +1,7 @@
 class Settings {
   constructor(obj) {
     this.outputPath = obj.outputPath;
+    this.package = obj.package;
     this.policy = obj.policy ? new Policy(obj.policy) : null;
     this.verbose = obj.verbose;
   }

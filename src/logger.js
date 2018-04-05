@@ -1,5 +1,6 @@
 const chalk = require('chalk');
-const program = require('commander');
+
+let isVerbose = false;
 
 const logger = {
   error(text) {
@@ -10,8 +11,12 @@ const logger = {
     console.log(text);
   },
 
+  initialize(settings) {
+    isVerbose = settings.verbose;
+  },
+
   verbose(text) {
-    if (program.verbose) {
+    if (isVerbose) {
       console.log(text);
     }
   }
