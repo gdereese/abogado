@@ -12,7 +12,7 @@ Abogado inspects the license type of each Node package dependency referenced by 
 
 For example, this would work very well incorporated into an automated build process so that the build can be failed if a dependency is introduced for which your organization cannot comply with the license terms.
 
-## Installation (NPM)
+## Installation using NPM
 
 #### Install as a local dependency
 
@@ -48,10 +48,10 @@ MUST be installed prior to running this utility.
 Refer to licenses using their SPDX identifiers. The list of licenses available are here:
 https://spdx.org/licenses
 
-Alternatively, options can be read from an `abogado.json` file located in the package root directory.  
+Alternatively, configuration options can be read from an `abogado.json` file located in the package root directory.  
 In combination, options can also be specified on the command-line to override those options found in the file.
 
-See [Options File Schema](https://github.com/gdereese/abogado/wiki/Options-File-Schema) for more details.
+See [Configuration File Schema](https://github.com/gdereese/abogado/wiki/Configuration-File-Schema) for more details.
 
 ## Examples
 
