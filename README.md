@@ -12,9 +12,9 @@ Abogado inspects the license type of each Node package dependency referenced by 
 
 For example, this would work very well incorporated into an automated build process so that the build can be failed if a dependency is introduced for which your organization cannot comply with the license terms.
 
-## Installation
+## Installation (NPM)
 
-#### Install locally
+#### Install as a local dependency
 
 ```
 npm install abogado
@@ -48,31 +48,10 @@ MUST be installed prior to running this utility.
 Refer to licenses using their SPDX identifiers. The list of licenses available are here:
 https://spdx.org/licenses
 
-### abogado.json
-
 Alternatively, options can be read from an `abogado.json` file located in the package root directory.  
 In combination, options can also be specified on the command-line to override those options found in the file.
 
-```javascript
-{
-  "outputPath": "path/to/stuff",
-  "policy": {
-    "allow": {
-      "licenses": [
-        "foo",
-        "bar"
-      ]
-    },
-    "deny": {
-      "packages": [
-        "baz",
-        "qux"
-      ]
-    }
-  },
-  "verbose": true
-}
-```
+See [Options File Schema](https://github.com/gdereese/abogado/wiki/Options-File-Schema) for more details.
 
 ## Examples
 
@@ -89,3 +68,7 @@ abogado . --allow-licenses MIT,Apache-
 ```
 abogado . --deny-licenses AGPL-1.0
 ```
+
+## Further Reading
+
+* [Options File Schema](https://github.com/gdereese/abogado/wiki/Options-File-Schema)
