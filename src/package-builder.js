@@ -2,47 +2,47 @@ const fs = require('fs');
 const _ = require('lodash');
 const path = require('path');
 
-const packageBuilder = {
-  build(packageDir) {
-    const packageLockPath = path.join(packageDir, 'package-lock.json');
-    const packageLock = JSON.parse(fs.readFileSync(packageLockPath).toString());
+const logger = require('./logger');
 
+const packageBuilder = {
+  build(packageDir, packageLock) {
     const pkg = {
       dependencies: []
     };
 
     const dependenciesDir = path.join(packageDir, 'node_modules');
-    const dependencyNames = _.keys(packageLock.dependencies);
-    _.forEach(dependencyNames, name =>
-      addDependency(name, dependenciesDir, pkg.dependencies)
-    );
+    for (const name of _.keys(packageLock.dependencies)) {
+      addDependency(name, dependenciesDir, pkg.dependencies);
+    }
 
     return pkg;
   }
 };
 
 function addDependency(name, dependenciesDir, dependencies) {
+  const dependency = {
+    name
+  };
+
   const dependencyPackageJsonPath = path.join(
     dependenciesDir,
     name,
     'package.json'
   );
-  const dependencyPackage = JSON.parse(
-    fs.readFileSync(dependencyPackageJsonPath).toString()
-  );
+  if (fs.existsSync(dependencyPackageJsonPath)) {
+    dependency.path = dependencyPackageJsonPath;
 
-  const dependency = {
-    description: dependencyPackage.description,
-    license: getLicenseText(dependencyPackage.license),
-    name: dependencyPackage.name,
-    version: dependencyPackage.version
-  };
-  const dependencyExists = d => {
-    return d.name === dependency.name && d.version === dependency.version;
-  };
-  if (!_.some(dependencies, dependencyExists)) {
-    dependencies.push(dependency);
+    const dependencyPackage = JSON.parse(
+      fs.readFileSync(dependencyPackageJsonPath).toString()
+    );
+    dependency.description = dependencyPackage.description;
+    dependency.license = getLicenseText(dependencyPackage.license);
+    dependency.version = dependencyPackage.version;
+  } else {
+    logger.warn(`WARN: Files for dependency '${name}' were not found.`);
   }
+
+  dependencies.push(dependency);
 }
 
 function getLicenseText(license) {

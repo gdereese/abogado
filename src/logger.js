@@ -19,6 +19,10 @@ const logger = {
     if (isVerbose) {
       console.log(text);
     }
+  },
+
+  warn(text) {
+    console.log(chalk.default.yellowBright(text));
   }
 };
 

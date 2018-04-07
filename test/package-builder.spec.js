@@ -1,30 +1,60 @@
 const fs = require('fs');
 const _ = require('lodash');
-const path = require('path');
 
+const mockConsole = require('./fixtures/mock-console');
 const packageBuilder = require('../src/package-builder');
 
 describe('package-builder', () => {
-  it('reads dependency name and version from package-lock.json', () => {
+  beforeAll(() => {
+    mockConsole.start();
+  });
+
+  afterAll(() => {
+    mockConsole.stop();
+  });
+
+  it('processes dependencies defined in package.json but not installed', () => {
     const packageDir = '.';
+    const packageLock = {
+      dependencies: {
+        foo: {}
+      }
+    };
 
-    const pkg = packageBuilder.build('.');
+    const pkg = packageBuilder.build(packageDir, packageLock);
 
-    const packageLockPath = path.join(packageDir, 'package-lock.json');
-    const packageLock = JSON.parse(fs.readFileSync(packageLockPath).toString());
+    const actualDependency = _.find(pkg.dependencies, { name: 'foo' });
 
-    expect(pkg).toBeTruthy();
+    expect(actualDependency).toBeTruthy();
 
-    expect(pkg.dependencies).toBeTruthy();
+    expect(actualDependency.description).toBeFalsy();
+    expect(actualDependency.license).toBeFalsy();
+    expect(actualDependency.name).toBe('foo');
+    expect(actualDependency.version).toBeFalsy();
+  });
 
-    for (const name of _.keys(packageLock.dependencies)) {
-      const packageLockDependency = packageLock.dependencies[name];
+  it('processes dependencies defined in package.json and installed', () => {
+    const packageDir = '.';
+    const packageLock = {
+      dependencies: {
+        jasmine: {}
+      }
+    };
 
-      const packageDependency = _.find(pkg.dependencies, {
-        name
-      });
+    const pkg = packageBuilder.build(packageDir, packageLock);
 
-      expect(packageDependency.version).toBe(packageLockDependency.version);
-    }
+    const expectedDependency = JSON.parse(
+      fs.readFileSync('./node_modules/jasmine/package.json').toString()
+    );
+    const actualDependency = _.find(pkg.dependencies, {
+      name: _.keys(packageLock.dependencies)[0]
+    });
+
+    expect(actualDependency).toBeTruthy();
+
+    expect(actualDependency.description).toBe(expectedDependency.description);
+    expect(actualDependency.license).toBe(expectedDependency.license);
+    expect(actualDependency.name).toBe(expectedDependency.name);
+    expect(actualDependency.version).toBe(expectedDependency.version);
   });
 });
