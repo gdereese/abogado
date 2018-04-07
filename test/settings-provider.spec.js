@@ -1,4 +1,4 @@
-const fs = require('fs');
+const jsonFile = require('jsonfile');
 
 const settingsProvider = require('../src/settings-provider');
 
@@ -38,9 +38,7 @@ describe('settings-provider', () => {
 
     const settings = settingsProvider.getSettings(settingsFilePath);
 
-    const fileSettings = JSON.parse(
-      fs.readFileSync(settingsFilePath).toString()
-    );
+    const fileSettings = jsonFile.readFileSync(settingsFilePath);
 
     expect(settings.outputPath).toEqual(fileSettings.outputPath);
 
@@ -71,9 +69,7 @@ describe('settings-provider', () => {
       commandLineArgs
     );
 
-    const fileSettings = JSON.parse(
-      fs.readFileSync(settingsFilePath).toString()
-    );
+    const fileSettings = jsonFile.readFileSync(settingsFilePath);
 
     expect(settings.outputPath).toEqual(commandLineArgs.outputPath);
 

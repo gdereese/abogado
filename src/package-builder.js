@@ -1,4 +1,5 @@
 const fs = require('fs');
+const jsonFile = require('jsonfile');
 const _ = require('lodash');
 const path = require('path');
 
@@ -32,9 +33,7 @@ function addDependency(name, dependenciesDir, dependencies) {
   if (fs.existsSync(dependencyPackageJsonPath)) {
     dependency.path = dependencyPackageJsonPath;
 
-    const dependencyPackage = JSON.parse(
-      fs.readFileSync(dependencyPackageJsonPath).toString()
-    );
+    const dependencyPackage = jsonFile.readFileSync(dependencyPackageJsonPath);
     dependency.description = dependencyPackage.description;
     dependency.license = getLicenseText(dependencyPackage.license);
     dependency.version = dependencyPackage.version;

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
-const _ = require('lodash');
+const jsonFile = require('jsonfile');
 const path = require('path');
 const program = require('commander');
 
@@ -60,15 +60,15 @@ logger.verbose(
   `Collecting dependencies from package '${program.packageDir}'...`
 );
 const packageLockPath = path.join(program.packageDir, 'package-lock.json');
-const packageLock = JSON.parse(fs.readFileSync(packageLockPath).toString());
+const packageLock = jsonFile.readFileSync(packageLockPath);
 settings.package = packageBuilder.build(program.packageDir, packageLock);
 
 // validate settings (abort if any issue found)
 const validationErrors = validator.validate(settings);
-if (validationErrors.length > 0) {
-  _.forEach(validationErrors, error => {
-    logger.error(`*** ERROR: '${error}`);
-  });
+for (const error of validationErrors) {
+  logger.error(`*** ERROR: '${error}`);
+}
+if (validationErrors && validationErrors.length > 0) {
   throw new Error('One or more validation errors were encountered.');
 }
 logger.verbose('Settings validated.');
@@ -81,12 +81,12 @@ if (settings.policy && (settings.policy.allow || settings.policy.deny)) {
   logger.verbose('Evaluating dependencies for policy violations...');
   violations = paralegal.evaluate(settings.package, settings.policy);
 
-  if ((violations || []).length > 0) {
-    _.forEach(violations, violation => {
+  if (violations && violations.length > 0) {
+    for (const violation of violations) {
       logger.error(
         `*** VIOLATION (${violation.dependencyName}): ${violation.reason}`
       );
-    });
+    }
   } else {
     logger.info('No policy violations found.');
   }

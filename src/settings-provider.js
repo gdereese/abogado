@@ -1,4 +1,5 @@
 const fs = require('fs');
+const jsonFile = require('jsonfile');
 const _ = require('lodash');
 
 const logger = require('./logger');
@@ -9,7 +10,7 @@ const settingsProvider = {
     let fileSettings = null;
 
     if (fs.existsSync(settingsFilePath)) {
-      fileSettings = JSON.parse(fs.readFileSync(settingsFilePath).toString());
+      fileSettings = jsonFile.readFileSync(settingsFilePath);
 
       logger.verbose(`Using policy settings from file '${settingsFilePath}'.`);
     } else {

@@ -1,4 +1,4 @@
-const fs = require('fs');
+const jsonFile = require('jsonfile');
 const _ = require('lodash');
 
 const mockConsole = require('./fixtures/mock-console');
@@ -43,8 +43,8 @@ describe('package-builder', () => {
 
     const pkg = packageBuilder.build(packageDir, packageLock);
 
-    const expectedDependency = JSON.parse(
-      fs.readFileSync('./node_modules/jasmine/package.json').toString()
+    const expectedDependency = jsonFile.readFileSync(
+      './node_modules/jasmine/package.json'
     );
     const actualDependency = _.find(pkg.dependencies, {
       name: _.keys(packageLock.dependencies)[0]

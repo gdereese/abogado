@@ -1,11 +1,16 @@
 {
   "name": "abogado",
   "version": "2.0.0",
-  "description":
-    "Checks a package's dependencies for compliance with a specified licensing policy.",
-  "keywords": ["nodejs", "licenses"],
+  "description": "Checks a package's dependencies for compliance with a specified licensing policy.",
+  "keywords": [
+    "nodejs",
+    "licenses"
+  ],
   "author": "Gary DeReese Jr",
   "license": "MIT",
+  "engines": {
+    "node": ">=6.0.0"
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/gdereese/abogado.git"
@@ -15,7 +20,9 @@
   },
   "main": "dist/index.js",
   "bin": "dist/index.js",
-  "files": ["dist/**"],
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
     "build": "npm run-script lint && babel src -d dist",
     "coverage": "nyc --reporter=lcov npm test",
@@ -42,6 +49,7 @@
   "dependencies": {
     "chalk": "2.3.2",
     "commander": "2.15.1",
+    "jsonfile": "4.0.0",
     "lodash": "4.17.5"
   }
 }
