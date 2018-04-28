@@ -1,5 +1,4 @@
 const jsonFile = require('jsonfile');
-const _ = require('lodash');
 
 const mockConsole = require('./fixtures/mock-console');
 const packageBuilder = require('../src/package-builder');
@@ -23,7 +22,9 @@ describe('package-builder', () => {
 
     const pkg = packageBuilder.build(packageDir, packageLock);
 
-    const actualDependency = _.find(pkg.dependencies, { name: 'foo' });
+    const actualDependency = pkg.dependencies.find(
+      dependency => dependency.name === 'foo'
+    );
 
     expect(actualDependency).toBeTruthy();
 
@@ -46,9 +47,9 @@ describe('package-builder', () => {
     const expectedDependency = jsonFile.readFileSync(
       './node_modules/jasmine/package.json'
     );
-    const actualDependency = _.find(pkg.dependencies, {
-      name: _.keys(packageLock.dependencies)[0]
-    });
+    const actualDependency = pkg.dependencies.find(
+      dependency => dependency.name === Object.keys(packageLock.dependencies)[0]
+    );
 
     expect(actualDependency).toBeTruthy();
 

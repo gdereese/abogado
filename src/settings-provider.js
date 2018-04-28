@@ -14,6 +14,8 @@ const settingsProvider = {
 
       logger.verbose(`Using policy settings from file '${settingsFilePath}'.`);
     } else {
+      fileSettings = {};
+
       logger.verbose(
         'No policy settings file found in package directory, assuming defaults.'
       );
@@ -21,7 +23,7 @@ const settingsProvider = {
 
     // there's currently a minor impedance mismatch between the command-line parameters and the settings schema;
     // align to the schema before proceeding
-    const commandLineSettings = _.assign({}, commandLineArgs);
+    const commandLineSettings = Object.assign({}, commandLineArgs);
     if (commandLineSettings.allowLicenses) {
       _.set(
         commandLineSettings,
@@ -51,7 +53,7 @@ const settingsProvider = {
       );
     }
 
-    return new Settings(_.assign(fileSettings, commandLineSettings));
+    return new Settings(Object.assign(fileSettings, commandLineSettings));
   }
 };
 

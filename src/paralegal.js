@@ -1,5 +1,3 @@
-const _ = require('lodash');
-
 const paralegal = {
   evaluate(pkg, policy) {
     const violations = [];
@@ -9,8 +7,7 @@ const paralegal = {
       evaluatePolicy({
         package: pkg,
         dependencyProperty: 'license',
-        policy,
-        rulesPath: 'allow.licenses',
+        rules: policy.allow && policy.allow.licenses,
         rulesType: 'white',
         reasonBuilder: dependency =>
           `License '${
@@ -24,8 +21,7 @@ const paralegal = {
       evaluatePolicy({
         package: pkg,
         dependencyProperty: 'name',
-        policy,
-        rulesPath: 'allow.packages',
+        rules: policy.allow && policy.allow.packages,
         rulesType: 'white',
         reasonBuilder: dependency =>
           `Package '${dependency.name}' is not explicitly permitted by policy.`
@@ -37,8 +33,7 @@ const paralegal = {
       evaluatePolicy({
         package: pkg,
         dependencyProperty: 'license',
-        policy,
-        rulesPath: 'deny.licenses',
+        rules: policy.deny && policy.deny.licenses,
         rulesType: 'black',
         reasonBuilder: dependency =>
           `License '${dependency.license}' is explicitly prohibited by policy.`
@@ -50,8 +45,7 @@ const paralegal = {
       evaluatePolicy({
         package: pkg,
         dependencyProperty: 'name',
-        policy,
-        rulesPath: 'deny.packages',
+        rules: policy.deny && policy.deny.packages,
         rulesType: 'black',
         reasonBuilder: dependency =>
           `Package '${dependency.name}' is explicitly prohibited by policy.`
@@ -63,25 +57,24 @@ const paralegal = {
 };
 
 function evaluatePolicy(params) {
-  const rules = _.get(params, `policy.${params.rulesPath}`);
-  if (!rules || rules.length === 0) {
+  if (!params.rules || params.rules.length === 0) {
     return [];
   }
 
-  const violators = _.filter(params.package.dependencies, dependency => {
+  const violators = params.package.dependencies.filter(dependency => {
     switch (params.rulesType) {
       case 'white':
-        return !_.some(rules, pattern =>
+        return !params.rules.some(pattern =>
           new RegExp(pattern).test(dependency[params.dependencyProperty])
         );
       case 'black':
-        return _.some(rules, pattern =>
+        return params.rules.some(pattern =>
           new RegExp(pattern).test(dependency[params.dependencyProperty])
         );
     }
   });
 
-  const violations = _.map(violators, dependency => {
+  const violations = violators.map(dependency => {
     return {
       dependencyName: dependency.name,
       reason: params.reasonBuilder(dependency)

@@ -1,6 +1,5 @@
 const fs = require('fs');
 const jsonFile = require('jsonfile');
-const _ = require('lodash');
 const path = require('path');
 
 const logger = require('./logger');
@@ -12,7 +11,7 @@ const packageBuilder = {
     };
 
     const dependenciesDir = path.join(packageDir, 'node_modules');
-    for (const name of _.keys(packageLock.dependencies)) {
+    for (const name of Object.keys(packageLock.dependencies)) {
       addDependency(name, dependenciesDir, pkg.dependencies);
     }
 
