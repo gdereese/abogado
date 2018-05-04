@@ -1,33 +1,11 @@
 const paralegal = require('../src/paralegal');
 
 describe('paralegal', () => {
-  it('detects no violation for license specified in whitelist', () => {
-    const pkg = {
-      dependencies: [
-        {
-          description: '',
-          license: 'foo',
-          name: '',
-          version: ''
-        }
-      ]
-    };
-    const policy = {
-      allow: {
-        licenses: ['foo']
-      },
-      deny: {
-        licenses: []
-      }
-    };
+  let pkg = null;
+  let policy = null;
 
-    const violations = paralegal.evaluate(pkg, policy);
-
-    expect(violations.length).toBe(0);
-  });
-
-  it('detects no violation for package specified in whitelist', () => {
-    const pkg = {
+  beforeAll(() => {
+    pkg = {
       dependencies: [
         {
           description: '',
@@ -37,167 +15,106 @@ describe('paralegal', () => {
         }
       ]
     };
-    const policy = {
-      allow: {
-        packages: ['foo']
-      },
-      deny: {
-        packages: []
-      }
-    };
+    policy = {};
+  });
 
-    const violations = paralegal.evaluate(pkg, policy);
+  it('detects violation for a broken deny rule', () => {
+    const law = [
+      {
+        name: 'must-not-be-foo',
+        isViolationIfMatch: true,
+        match: dependency => dependency.name === 'foo'
+      }
+    ];
+
+    const violations = paralegal.evaluate(pkg, policy, law);
+
+    expect(violations.length).toBe(1);
+
+    expect(violations[0].reason).toBe(law[0].name);
+  });
+
+  it('detects no violation for an unbroken deny rule', () => {
+    const law = [
+      {
+        name: 'must-be-foo',
+        isViolationIfMatch: true,
+        match: dependency => dependency.name !== 'foo'
+      }
+    ];
+
+    const violations = paralegal.evaluate(pkg, policy, law);
 
     expect(violations.length).toBe(0);
   });
 
-  it('detects no violation for license not specified in blacklist', () => {
-    const pkg = {
-      dependencies: [
-        {
-          description: '',
-          license: 'foo',
-          name: '',
-          version: ''
-        }
-      ]
-    };
-    const policy = {
-      allow: {
-        licenses: []
-      },
-      deny: {
-        licenses: ['bar']
+  it('detects no violation for a broken allow rule', () => {
+    const law = [
+      {
+        name: 'can-be-bar',
+        isViolationIfMatch: false,
+        match: dependency => dependency.name === 'bar'
       }
-    };
+    ];
 
-    const violations = paralegal.evaluate(pkg, policy);
+    const violations = paralegal.evaluate(pkg, policy, law);
 
     expect(violations.length).toBe(0);
   });
 
-  it('detects no violation for package not specified in blacklist', () => {
-    const pkg = {
-      dependencies: [
-        {
-          description: '',
-          license: '',
-          name: 'foo',
-          version: ''
-        }
-      ]
-    };
-    const policy = {
-      allow: {
-        packages: []
-      },
-      deny: {
-        packages: ['bar']
+  it('detects no violation for an unbroken allow rule', () => {
+    const law = [
+      {
+        name: 'can-be-foo',
+        isViolationIfMatch: false,
+        match: dependency => dependency.name === 'foo'
       }
-    };
+    ];
 
-    const violations = paralegal.evaluate(pkg, policy);
+    const violations = paralegal.evaluate(pkg, policy, law);
 
     expect(violations.length).toBe(0);
   });
 
-  it('detects violation for license not specified in whitelist', () => {
-    const pkg = {
-      dependencies: [
-        {
-          description: '',
-          license: 'foo',
-          name: '',
-          version: ''
-        }
-      ]
-    };
-    const policy = {
-      allow: {
-        licenses: ['bar']
+  it('detects violation for precedent broken deny rule', () => {
+    const law = [
+      {
+        name: 'must-not-be-foo',
+        isViolationIfMatch: true,
+        match: dependency => dependency.name === 'foo'
       },
-      deny: {
-        licenses: []
+      {
+        name: 'can-be-foo',
+        isViolationIfMatch: false,
+        match: dependency => dependency.name === 'foo'
       }
-    };
+    ];
 
-    const violations = paralegal.evaluate(pkg, policy);
+    const violations = paralegal.evaluate(pkg, policy, law);
 
     expect(violations.length).toBe(1);
+
+    expect(violations[0].reason).toBe(law[0].name);
   });
 
-  it('detects violation for package not specified in whitelist', () => {
-    const pkg = {
-      dependencies: [
-        {
-          description: '',
-          license: '',
-          name: 'foo',
-          version: ''
-        }
-      ]
-    };
-    const policy = {
-      allow: {
-        packages: ['bar']
+  it('detects violation for antecendent broken deny rule', () => {
+    const law = [
+      {
+        name: 'can-be-foo',
+        isViolationIfMatch: false,
+        match: dependency => dependency.name === 'foo'
       },
-      deny: {
-        packages: []
+      {
+        name: 'must-not-be-foo',
+        isViolationIfMatch: true,
+        match: dependency => dependency.name === 'foo'
       }
-    };
+    ];
 
-    const violations = paralegal.evaluate(pkg, policy);
+    const violations = paralegal.evaluate(pkg, policy, law);
 
     expect(violations.length).toBe(1);
-  });
 
-  it('detects violation for license specified in blacklist', () => {
-    const pkg = {
-      dependencies: [
-        {
-          description: '',
-          license: 'foo',
-          name: '',
-          version: ''
-        }
-      ]
-    };
-    const policy = {
-      allow: {
-        licenses: []
-      },
-      deny: {
-        licenses: ['foo']
-      }
-    };
-
-    const violations = paralegal.evaluate(pkg, policy);
-
-    expect(violations.length).toBe(1);
-  });
-
-  it('detects violation for package specified in blacklist', () => {
-    const pkg = {
-      dependencies: [
-        {
-          description: '',
-          license: '',
-          name: 'foo',
-          version: ''
-        }
-      ]
-    };
-    const policy = {
-      allow: {
-        packages: []
-      },
-      deny: {
-        packages: ['foo']
-      }
-    };
-
-    const violations = paralegal.evaluate(pkg, policy);
-
-    expect(violations.length).toBe(1);
+    expect(violations[0].reason).toBe(law[1].name);
   });
 });

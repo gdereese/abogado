@@ -5,6 +5,7 @@ const jsonFile = require('jsonfile');
 const path = require('path');
 const program = require('commander');
 
+const law = require('./law');
 const logger = require('./logger');
 const packageBuilder = require('./package-builder');
 const paralegal = require('./paralegal');
@@ -77,9 +78,9 @@ logger.info('Processing started.');
 
 // process package against policy
 let violations;
-if (settings.policy && (settings.policy.allow || settings.policy.deny)) {
+if (settings.policy) {
   logger.verbose('Evaluating dependencies for policy violations...');
-  violations = paralegal.evaluate(settings.package, settings.policy);
+  violations = paralegal.evaluate(settings.package, settings.policy, law);
 
   if (violations && violations.length > 0) {
     for (const violation of violations) {
