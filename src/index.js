@@ -5,8 +5,8 @@ const jsonFile = require('jsonfile');
 const path = require('path');
 const program = require('commander');
 
-const buildReport = require('./build-report');
 const buildPackage = require('./build-package');
+const buildReport = require('./build-report');
 const getSettings = require('./get-settings');
 const law = require('./law');
 const logger = require('./logger');
