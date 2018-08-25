@@ -7,7 +7,6 @@ const Settings = require('./settings');
 
 function getSettings(settingsFilePath, commandLineArgs) {
   let fileSettings = null;
-
   if (fs.existsSync(settingsFilePath)) {
     fileSettings = jsonFile.readFileSync(settingsFilePath);
 
@@ -50,7 +49,7 @@ function getSettings(settingsFilePath, commandLineArgs) {
     );
   }
 
-  return new Settings(Object.assign(fileSettings, commandLineSettings));
+  return new Settings(Object.assign(fileSettings || {}, commandLineSettings));
 }
 
 module.exports = getSettings;
