@@ -9,60 +9,32 @@ const law = require('./law');
 const logger = require('./logger');
 const packageBuilder = require('./package-builder');
 const paralegal = require('./paralegal');
+const parseArgs = require('./parse-args');
 const reportBuilder = require('./report-builder');
 const settingsProvider = require('./settings-provider');
 const validator = require('./validator');
 
-const split = value => value.split(',');
+program.on('--help', () => {
+  console.log();
+});
 
-program
-  .option(
-    '--allow-licenses <licenses>',
-    'List of licenses to allow (supports RegEx patterns)',
-    split
-  )
-  .option(
-    '--allow-packages <packages>',
-    'List of packages to allow (supports RegEx patterns)',
-    split
-  )
-  .option(
-    '--deny-licenses <licenses>',
-    'List of licenses to deny (supports RegEx patterns)',
-    split
-  )
-  .option(
-    '--deny-packages <packages>',
-    'List of packages to deny (supports RegEx patterns)',
-    split
-  )
-  .option(
-    '-p, --package-dir <path>',
-    'Directory of package to audit (must contain package-lock.json)',
-    '.'
-  )
-  .option('-o, --output-path <path>', 'Path to report output file')
-  .option('-v, --verbose', 'Enable verbose logging')
-  .on('--help', () => {
-    console.log();
-  })
-  .parse(process.argv);
+const args = parseArgs({
+  program
+});
 
 // combine file and command-line settings with defaults
-const settingsFilePath = path.resolve(program.packageDir, 'abogado.json');
-const settings = settingsProvider.getSettings(settingsFilePath, program);
+const settingsFilePath = path.resolve(args.packageDir, 'abogado.json');
+const settings = settingsProvider.getSettings(settingsFilePath, args);
 
 logger.initialize(settings);
 
 logger.info('');
 
 // build package representation from package-lock.json
-logger.verbose(
-  `Collecting dependencies from package '${program.packageDir}'...`
-);
-const packageLockPath = path.join(program.packageDir, 'package-lock.json');
+logger.verbose(`Collecting dependencies from package '${args.packageDir}'...`);
+const packageLockPath = path.join(args.packageDir, 'package-lock.json');
 const packageLock = jsonFile.readFileSync(packageLockPath);
-settings.package = packageBuilder.build(program.packageDir, packageLock);
+settings.package = packageBuilder.build(args.packageDir, packageLock);
 
 // validate settings (abort if any issue found)
 const validationErrors = validator.validate(settings);
