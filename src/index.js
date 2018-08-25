@@ -5,13 +5,13 @@ const jsonFile = require('jsonfile');
 const path = require('path');
 const program = require('commander');
 
+const buildReport = require('./build-report');
 const getSettings = require('./get-settings');
 const law = require('./law');
 const logger = require('./logger');
 const packageBuilder = require('./package-builder');
 const paralegal = require('./paralegal');
 const parseArgs = require('./parse-args');
-const reportBuilder = require('./report-builder');
 const validateSettings = require('./validate-settings');
 
 program.on('--help', () => {
@@ -70,7 +70,7 @@ if (settings.policy) {
 // build report
 if (settings.outputPath) {
   logger.verbose('Generating report...');
-  const report = reportBuilder.build(settings, violations);
+  const report = buildReport(settings, violations);
 
   fs.writeFileSync(settings.outputPath, report);
   logger.verbose(`Report written to ${path.resolve(settings.outputPath)}.`);
