@@ -1,6 +1,6 @@
-const validator = require('../src/validator');
+const validateSettings = require('../src/validate-settings');
 
-describe('validator', () => {
+describe('validate-settings', () => {
   it('should not allow both allow and deny license lists', () => {
     const settings = {
       package: {},
@@ -14,7 +14,7 @@ describe('validator', () => {
       }
     };
 
-    const errors = validator.validate(settings);
+    const errors = validateSettings(settings);
 
     expect(errors.length).toBe(1);
   });
@@ -32,7 +32,7 @@ describe('validator', () => {
       }
     };
 
-    const errors = validator.validate(settings);
+    const errors = validateSettings(settings);
 
     expect(errors.length).toBe(1);
   });

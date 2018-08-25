@@ -12,7 +12,7 @@ const packageBuilder = require('./package-builder');
 const paralegal = require('./paralegal');
 const parseArgs = require('./parse-args');
 const reportBuilder = require('./report-builder');
-const validator = require('./validator');
+const validateSettings = require('./validate-settings');
 
 program.on('--help', () => {
   console.log();
@@ -37,7 +37,7 @@ const packageLock = jsonFile.readFileSync(packageLockPath);
 settings.package = packageBuilder.build(args.packageDir, packageLock);
 
 // validate settings (abort if any issue found)
-const validationErrors = validator.validate(settings);
+const validationErrors = validateSettings(settings);
 for (const error of validationErrors) {
   logger.error(`*** ERROR: '${error}`);
 }
