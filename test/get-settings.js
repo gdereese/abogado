@@ -1,8 +1,8 @@
 const jsonFile = require('jsonfile');
 
-const settingsProvider = require('../src/settings-provider');
+const getSettings = require('../src/get-settings');
 
-describe('settings-provider', () => {
+describe('get-settings', () => {
   it('maps all settings from command-line arguments', () => {
     const settingsFilePath = '';
     const commandLineArgs = {
@@ -14,10 +14,7 @@ describe('settings-provider', () => {
       verbose: true
     };
 
-    const settings = settingsProvider.getSettings(
-      settingsFilePath,
-      commandLineArgs
-    );
+    const settings = getSettings(settingsFilePath, commandLineArgs);
 
     expect(settings.outputPath).toEqual(commandLineArgs.outputPath);
 
@@ -36,7 +33,7 @@ describe('settings-provider', () => {
   it('maps all settings from file', () => {
     const settingsFilePath = './test/fixtures/abogado_test.json';
 
-    const settings = settingsProvider.getSettings(settingsFilePath);
+    const settings = getSettings(settingsFilePath);
 
     const fileSettings = jsonFile.readFileSync(settingsFilePath);
 
@@ -64,10 +61,7 @@ describe('settings-provider', () => {
       outputPath: 'path/to/thing'
     };
 
-    const settings = settingsProvider.getSettings(
-      settingsFilePath,
-      commandLineArgs
-    );
+    const settings = getSettings(settingsFilePath, commandLineArgs);
 
     const fileSettings = jsonFile.readFileSync(settingsFilePath);
 

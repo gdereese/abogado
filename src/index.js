@@ -5,13 +5,13 @@ const jsonFile = require('jsonfile');
 const path = require('path');
 const program = require('commander');
 
+const getSettings = require('./get-settings');
 const law = require('./law');
 const logger = require('./logger');
 const packageBuilder = require('./package-builder');
 const paralegal = require('./paralegal');
 const parseArgs = require('./parse-args');
 const reportBuilder = require('./report-builder');
-const settingsProvider = require('./settings-provider');
 const validator = require('./validator');
 
 program.on('--help', () => {
@@ -24,7 +24,7 @@ const args = parseArgs({
 
 // combine file and command-line settings with defaults
 const settingsFilePath = path.resolve(args.packageDir, 'abogado.json');
-const settings = settingsProvider.getSettings(settingsFilePath, args);
+const settings = getSettings(settingsFilePath, args);
 
 logger.initialize(settings);
 
