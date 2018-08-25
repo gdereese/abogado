@@ -1,17 +1,11 @@
 const jsonFile = require('jsonfile');
-const _ = require('lodash');
 
-const mockConsole = require('./fixtures/mock-console');
-const packageBuilder = require('../src/package-builder');
+const buildPackage = require('../src/build-package');
 
-describe('package-builder', () => {
-  beforeAll(() => {
-    mockConsole.start();
-  });
-
-  afterAll(() => {
-    mockConsole.stop();
-  });
+describe('build-package', () => {
+  const logger = {
+    warn: () => {}
+  };
 
   it('processes dependencies defined in package.json but not installed', () => {
     const packageDir = '.';
@@ -21,9 +15,9 @@ describe('package-builder', () => {
       }
     };
 
-    const pkg = packageBuilder.build(packageDir, packageLock);
+    const pkg = buildPackage(packageDir, packageLock, logger);
 
-    const actualDependency = _.find(pkg.dependencies, { name: 'foo' });
+    const actualDependency = pkg.dependencies.find(d => d.name === 'foo');
 
     expect(actualDependency).toBeTruthy();
 
@@ -41,14 +35,14 @@ describe('package-builder', () => {
       }
     };
 
-    const pkg = packageBuilder.build(packageDir, packageLock);
+    const pkg = buildPackage(packageDir, packageLock, logger);
 
     const expectedDependency = jsonFile.readFileSync(
       './node_modules/jasmine/package.json'
     );
-    const actualDependency = _.find(pkg.dependencies, {
-      name: _.keys(packageLock.dependencies)[0]
-    });
+    const actualDependency = pkg.dependencies.find(
+      d => d.name === Object.keys(packageLock.dependencies)[0]
+    );
 
     expect(actualDependency).toBeTruthy();
 

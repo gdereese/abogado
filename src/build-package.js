@@ -1,26 +1,21 @@
 const fs = require('fs');
 const jsonFile = require('jsonfile');
-const _ = require('lodash');
 const path = require('path');
 
-const logger = require('./logger');
+function buildPackage(packageDir, packageLock, logger) {
+  const pkg = {
+    dependencies: []
+  };
 
-const packageBuilder = {
-  build(packageDir, packageLock) {
-    const pkg = {
-      dependencies: []
-    };
-
-    const dependenciesDir = path.join(packageDir, 'node_modules');
-    for (const name of _.keys(packageLock.dependencies)) {
-      addDependency(name, dependenciesDir, pkg.dependencies);
-    }
-
-    return pkg;
+  const dependenciesDir = path.join(packageDir, 'node_modules');
+  for (const name of Object.keys(packageLock.dependencies)) {
+    addDependency(name, dependenciesDir, pkg.dependencies, logger);
   }
-};
 
-function addDependency(name, dependenciesDir, dependencies) {
+  return pkg;
+}
+
+function addDependency(name, dependenciesDir, dependencies, logger) {
   const dependency = {
     name
   };
@@ -52,4 +47,4 @@ function getLicenseText(license) {
   return String(license);
 }
 
-module.exports = packageBuilder;
+module.exports = buildPackage;

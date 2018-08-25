@@ -6,10 +6,10 @@ const path = require('path');
 const program = require('commander');
 
 const buildReport = require('./build-report');
+const buildPackage = require('./build-package');
 const getSettings = require('./get-settings');
 const law = require('./law');
 const logger = require('./logger');
-const packageBuilder = require('./package-builder');
 const paralegal = require('./paralegal');
 const parseArgs = require('./parse-args');
 const validateSettings = require('./validate-settings');
@@ -34,7 +34,7 @@ logger.info('');
 logger.verbose(`Collecting dependencies from package '${args.packageDir}'...`);
 const packageLockPath = path.join(args.packageDir, 'package-lock.json');
 const packageLock = jsonFile.readFileSync(packageLockPath);
-settings.package = packageBuilder.build(args.packageDir, packageLock);
+settings.package = buildPackage(args.packageDir, packageLock, logger);
 
 // validate settings (abort if any issue found)
 const validationErrors = validateSettings(settings);
