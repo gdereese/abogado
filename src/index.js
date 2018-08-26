@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 
+const chalk = require('chalk');
 const fs = require('fs');
 const jsonFile = require('jsonfile');
 const path = require('path');
@@ -7,10 +8,10 @@ const program = require('commander');
 
 const buildPackage = require('./build-package');
 const buildReport = require('./build-report');
+const createLogger = require('./create-logger');
 const evaluateLaw = require('./evaluate-law');
 const getSettings = require('./get-settings');
 const law = require('./law');
-const logger = require('./logger');
 const parseArgs = require('./parse-args');
 const validateSettings = require('./validate-settings');
 
@@ -26,9 +27,12 @@ const args = parseArgs({
 const settingsFilePath = path.resolve(args.packageDir, 'abogado.json');
 const settings = getSettings(settingsFilePath, args);
 
-logger.initialize(settings);
+const logger = createLogger({
+  chalk,
+  isVerbose: settings.verbose
+});
 
-logger.info('');
+logger.info();
 
 // build package representation from package-lock.json
 logger.verbose(`Collecting dependencies from package '${args.packageDir}'...`);
@@ -81,4 +85,4 @@ if (settings.policy && (settings.policy.allow || settings.policy.deny)) {
   );
 }
 
-logger.info('');
+logger.info();

@@ -2,19 +2,12 @@ const fs = require('fs');
 const jsonFile = require('jsonfile');
 const _ = require('lodash');
 
-const logger = require('./logger');
 const Settings = require('./settings');
 
 function getSettings(settingsFilePath, commandLineArgs) {
   let fileSettings = null;
   if (fs.existsSync(settingsFilePath)) {
     fileSettings = jsonFile.readFileSync(settingsFilePath);
-
-    logger.verbose(`Using policy settings from file '${settingsFilePath}'.`);
-  } else {
-    logger.verbose(
-      'No policy settings file found in package directory, assuming defaults.'
-    );
   }
 
   // there's currently a minor impedance mismatch between the command-line parameters and the settings schema;
