@@ -1,15 +1,9 @@
 function evaluateLaw(pkg, policy, law) {
   const violations = pkg.dependencies.reduce((v, d) => {
     // dependency is considered a violation upon the first deny-type rule that is broken
-    let brokenRule = null;
-    for (const rule of law) {
-      const isMatch = rule.match(d, policy);
-
-      if (isMatch && rule.isViolationIfMatch) {
-        brokenRule = rule;
-        break;
-      }
-    }
+    const brokenRule = law.find(
+      r => r.match(d, policy) && r.isViolationIfMatch
+    );
 
     if (brokenRule) {
       v.push({

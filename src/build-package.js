@@ -3,19 +3,17 @@ const jsonFile = require('jsonfile');
 const path = require('path');
 
 function buildPackage(packageDir, packageLock, logger) {
-  const pkg = {
-    dependencies: []
-  };
-
   const dependenciesDir = path.join(packageDir, 'node_modules');
-  Object.keys(packageLock.dependencies).forEach(k =>
-    addDependency(k, dependenciesDir, pkg.dependencies, logger)
-  );
+  const pkg = {
+    dependencies: Object.keys(packageLock.dependencies).map(k =>
+      buildDependency(k, dependenciesDir, logger)
+    )
+  };
 
   return pkg;
 }
 
-function addDependency(name, dependenciesDir, dependencies, logger) {
+function buildDependency(name, dependenciesDir, logger) {
   const dependency = {
     name
   };
@@ -36,7 +34,7 @@ function addDependency(name, dependenciesDir, dependencies, logger) {
     logger.warn(`WARN: Files for dependency '${name}' were not found.`);
   }
 
-  dependencies.push(dependency);
+  return dependency;
 }
 
 function getLicenseText(license) {
