@@ -5,15 +5,15 @@ const path = require('path');
 function buildPackage(packageDir, packageLock, logger) {
   const dependenciesDir = path.join(packageDir, 'node_modules');
   const pkg = {
-    dependencies: Object.keys(packageLock.dependencies).map(k =>
-      buildDependency(k, dependenciesDir, logger)
+    dependencies: Object.keys(packageLock.dependencies).map(
+      buildDependency(dependenciesDir, logger)
     )
   };
 
   return pkg;
 }
 
-function buildDependency(name, dependenciesDir, logger) {
+const buildDependency = (dependenciesDir, logger) => name => {
   const dependency = {
     name
   };
@@ -35,7 +35,7 @@ function buildDependency(name, dependenciesDir, logger) {
   }
 
   return dependency;
-}
+};
 
 function getLicenseText(license) {
   if (typeof license === 'object') {
