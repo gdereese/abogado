@@ -8,9 +8,9 @@ function buildPackage(packageDir, packageLock, logger) {
   };
 
   const dependenciesDir = path.join(packageDir, 'node_modules');
-  for (const name of Object.keys(packageLock.dependencies)) {
-    addDependency(name, dependenciesDir, pkg.dependencies, logger);
-  }
+  Object.keys(packageLock.dependencies).forEach(k =>
+    addDependency(k, dependenciesDir, pkg.dependencies, logger)
+  );
 
   return pkg;
 }

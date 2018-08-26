@@ -38,10 +38,8 @@ settings.package = buildPackage(args.packageDir, packageLock, logger);
 
 // validate settings (abort if any issue found)
 const validationErrors = validateSettings(settings);
-for (const error of validationErrors) {
-  logger.error(`*** ERROR: '${error}`);
-}
-if (validationErrors && validationErrors.length > 0) {
+validationErrors.forEach(e => logger.error(`*** ERROR: '${e}`));
+if ((validationErrors || []).length > 0) {
   throw new Error('One or more validation errors were encountered.');
 }
 logger.verbose('Settings validated.');
@@ -54,12 +52,10 @@ if (settings.policy) {
   logger.verbose('Evaluating dependencies for policy violations...');
   violations = paralegal.evaluate(settings.package, settings.policy, law);
 
-  if (violations && violations.length > 0) {
-    for (const violation of violations) {
-      logger.error(
-        `*** VIOLATION (${violation.dependencyName}): ${violation.reason}`
-      );
-    }
+  if ((violations || []).length > 0) {
+    violations.forEach(v =>
+      logger.error(`*** VIOLATION (${v.dependencyName}): ${v.reason}`)
+    );
   } else {
     logger.info('No policy violations found.');
   }
