@@ -1,4 +1,4 @@
-const paralegal = require('../src/paralegal');
+const evaluateLaw = require('../src/evaluate-law');
 
 describe('paralegal', () => {
   let pkg = null;
@@ -27,7 +27,7 @@ describe('paralegal', () => {
       }
     ];
 
-    const violations = paralegal.evaluate(pkg, policy, law);
+    const violations = evaluateLaw(pkg, policy, law);
 
     expect(violations.length).toBe(1);
 
@@ -43,7 +43,7 @@ describe('paralegal', () => {
       }
     ];
 
-    const violations = paralegal.evaluate(pkg, policy, law);
+    const violations = evaluateLaw(pkg, policy, law);
 
     expect(violations.length).toBe(0);
   });
@@ -57,7 +57,7 @@ describe('paralegal', () => {
       }
     ];
 
-    const violations = paralegal.evaluate(pkg, policy, law);
+    const violations = evaluateLaw(pkg, policy, law);
 
     expect(violations.length).toBe(0);
   });
@@ -71,7 +71,7 @@ describe('paralegal', () => {
       }
     ];
 
-    const violations = paralegal.evaluate(pkg, policy, law);
+    const violations = evaluateLaw(pkg, policy, law);
 
     expect(violations.length).toBe(0);
   });
@@ -90,7 +90,7 @@ describe('paralegal', () => {
       }
     ];
 
-    const violations = paralegal.evaluate(pkg, policy, law);
+    const violations = evaluateLaw(pkg, policy, law);
 
     expect(violations.length).toBe(1);
 
@@ -111,7 +111,7 @@ describe('paralegal', () => {
       }
     ];
 
-    const violations = paralegal.evaluate(pkg, policy, law);
+    const violations = evaluateLaw(pkg, policy, law);
 
     expect(violations.length).toBe(1);
 

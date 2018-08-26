@@ -7,10 +7,10 @@ const program = require('commander');
 
 const buildPackage = require('./build-package');
 const buildReport = require('./build-report');
+const evaluateLaw = require('./evaluate-law');
 const getSettings = require('./get-settings');
 const law = require('./law');
 const logger = require('./logger');
-const paralegal = require('./paralegal');
 const parseArgs = require('./parse-args');
 const validateSettings = require('./validate-settings');
 
@@ -50,7 +50,7 @@ logger.info('Processing started.');
 let violations;
 if (settings.policy) {
   logger.verbose('Evaluating dependencies for policy violations...');
-  violations = paralegal.evaluate(settings.package, settings.policy, law);
+  violations = evaluateLaw(settings.package, settings.policy, law);
 
   if ((violations || []).length > 0) {
     violations.forEach(v =>
