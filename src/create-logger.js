@@ -1,7 +1,7 @@
 function createLogger(options = {}) {
   return {
     error(str) {
-      log(str || '', (options.chalk || {}).red);
+      err(str || '', (options.chalk || {}).red);
     },
 
     info(str) {
@@ -18,6 +18,10 @@ function createLogger(options = {}) {
       log(str || '', (options.chalk || {}).yellowBright);
     }
   };
+}
+
+function err(str, chalk) {
+  console.error(chalk ? chalk(str) : str);
 }
 
 function log(str, chalk) {
